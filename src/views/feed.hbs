@@ -1,0 +1,43 @@
+<div class="container-feed">
+    <div class="box-feed">
+        {{> sidebar}}
+    </div>
+
+    <div class="box-feed">
+        <div class="feed-general">
+            {{!-- <div class="feed-add-project">
+                <div class="feed-add-project__image">
+                    <img src="/static/icons/add-image.png" alt="">
+                </div>
+                <p class="feed-add-project__info">
+                    Add a new project to your portfolio
+                </p>
+            </div> --}}
+            {{#each projects}}
+            <div class="card-project">
+                <div class="card-project-header">
+                    <div class="card-project-header__images">
+                        <img src="{{image}}" alt="">
+                    </div>
+                    <p class="card-project-header__username">hola mundo</p>
+                </div>
+                <div class="card-project-image">
+                    <img src="{{image_project}}" alt="">
+                </div>
+                <div class="card-project-body">
+                    <div class="card-project-body-description">
+                        <p>{{description}}</p>
+                    </div>
+                    <div class="card-project-body-tags">
+                        <ul>
+                            {{#each teachnologies}}
+                            <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

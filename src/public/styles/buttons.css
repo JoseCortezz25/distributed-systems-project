@@ -1,0 +1,46 @@
+.btn-standard {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid var(--color-black-theme1);
+  margin-top: 2rem;
+  transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
+}
+
+.btn-form {
+  background-color: var(--color-black-theme1);
+  width: 100%;
+  color: var(--color-white);
+}
+
+.btn-register {
+  background-color: var(--color-black-theme1);
+  color: var(--color-white);
+  margin-left: 20px;
+}
+
+.btn-login {
+  color: var(--color-black-theme1);
+}
+
+.btn-form:hover {
+  background-color: var(--color-white);
+  color: var(--color-black-theme1);
+  box-shadow: -3px -3px 0px 0px var(--color-black-theme1);
+}
+
+.btn-register:hover {
+  background-color: var(--color-white);
+  color: var(--color-black-theme1);
+  box-shadow: -3px -3px 0px 0px var(--color-black-theme1);
+}
+
+.btn-login:hover {
+  background-color: var(--color-black-theme1);
+  color: var(--color-white);
+  box-shadow: -3px -3px 0px 0px var(--color-black-theme1);
+}

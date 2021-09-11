@@ -1,0 +1,43 @@
+<section class="container-register">
+    <div class="section-register">
+        <div class="section-register__info">
+            {{!-- <div class="section-register__logo">
+                <img src="/static/icons/logo2.svg" alt="">
+            </div> --}}
+            <h2 class="title-principal-form">Register</h2>
+
+            <form action="">
+                <label for="fullname">Fullname</label>
+                <input type="text" class="input-control" id="fullname" placeholder="Enter your fullname">
+
+                <label for="username">Username</label>
+                <input type="text" class="input-control" id="username" placeholder="Enter your username">
+
+                <label for="password">Password</label>
+                <input type="password" class="input-control" id="password" placeholder="Enter your password">
+
+                <label for="description">Description</label>
+                <input type="text" class="input-control" id="description" placeholder="Enter your description">
+
+                <label for="profession">Profession</label>
+                <input type="text" class="input-control" id="profession" placeholder="Enter your profession">
+
+                <label for="profession">Skills</label>
+                <div class="knowledge-list">
+                    {{#seleccionarSkills a}}
+                    {{/seleccionarSkills}}
+                </div>
+                <div class="campo centrar-horizontal">
+                    <input type="hidden" name="skills" id="skills">
+                </div>
+
+                <button type="submit" class="btn-standard btn-form">Register</button>
+            </form>
+        </div>
+    </div>
+    <div class="section-register">
+        <div class="title-section-form">
+            <h2>Join our community</h2>
+        </div>
+    </div>
+</section>

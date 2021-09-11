@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&family=Roboto:wght@100;500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.container-general {
+  width: 80%;
+  margin: auto;
+  margin-top: 2.7rem;
+  /* border: 1px solid red; */
+}
+
+:root {
+  --color-black-theme1: #261C2C;
+  --color-navy-theme1: #3E2C41;
+  --color-blue-theme1: #5C527F;
+  --color-night-theme1: #6E85B2;
+
+  --color-teal-theme2: #D4ECDD;
+  --color-navy-theme2: #345B63;
+  --color-black-theme2: #152D35;
+  --color-winter-theme2: #112031;
+
+  --color-brown-theme3: #4A403A;
+  --color-maroon-theme3: #A45D5D;
+  --color-orange-theme3: #FFC069;
+  --color-white-theme3: #EFEFEF;
+
+  --color-white: #fff;
+  --color-gray: #F5F6FA;
+  --color-black: #000;
+  --color-blue: #0070f3;
+
+  --color-profile-name: #5C6C79;
+  --color-text-default: #51525D;
+}
+
+/* *::selection {
+  background: var(--color-black-theme1);
+  color: var(--color-white);
+} */

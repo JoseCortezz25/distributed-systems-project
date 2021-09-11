@@ -1,0 +1,7 @@
+<svg class="feed-icon-svg-rect" width="128" height="128" viewBox="0 0 128 128" fill="none"
+	xmlns="http://www.w3.org/2000/svg">
+	<rect class="feed-icon-rect" x="5" y="55" width="50" height="68" rx="11" stroke="#51525D" stroke-width="10"/>
+	<rect class="feed-icon-rect" x="73" y="5" width="50" height="68" rx="11" stroke="#51525D" stroke-width="10"/>
+	<rect class="feed-icon-rect" x="73" y="91" width="50" height="32" rx="11" stroke="#51525D" stroke-width="10"/>
+	<rect class="feed-icon-rect" x="5" y="5" width="50" height="32" rx="11" stroke="#51525D" stroke-width="10"/>
+</svg>

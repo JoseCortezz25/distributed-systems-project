@@ -1,0 +1,68 @@
+.container-add-project {
+  background-color: var(--color-gray);
+  width: 100%;
+  /* height: calc(100vh - 70px); */
+  margin: auto;
+  
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: start;
+  padding-bottom: 20px;
+}
+
+.container-add-project__content {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-add-project__form {
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.container-add-project__form label {
+  font-size: 1.7rem;
+}
+
+.container-trix {
+  background-color: var(--color-white);
+  width: 100%;
+  font-size: 1.3rem;
+  /* margin-top: 10px; */
+  padding-left: 20px;
+  margin-bottom: 10px;
+
+}
+
+
+.knowledge-list-addproject {
+  width: 100%;
+  /* border: 1px solid red; */
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.knowledge-list-addproject li {
+  background-color: var(--color-white);
+  width: 100%;
+  padding: 11px 5px;
+  list-style:none;
+  font-size: 1.4rem;
+  border: 2px solid var(--color-black-theme1);
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  cursor: pointer;
+}
+
+/* .container-add-project__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+} */
