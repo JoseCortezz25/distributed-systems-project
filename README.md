@@ -5,7 +5,7 @@ This is an educational project for the distributed systems course created with E
 ## 🚀 Installation
 **Clone the repository**
 
-`git clone `
+`git clone https://github.com/JoseCortezz25/distributed-systems-project.git`
 
 **Install dependencies**
 
