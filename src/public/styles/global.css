@@ -20,11 +20,13 @@ html {
 }
 
 :root {
-  --color-black-theme1: #261C2C;
+  /* --color-black-theme1: #261C2C; */
+  --color-black-theme1: hsl(278, 22%, 14%);
+  --color-black-theme1-light: hsla(278, 22%, 14%, 85%);
   --color-navy-theme1: #3E2C41;
   --color-blue-theme1: #5C527F;
+  --color-blue-theme1-light: hsl(253, 22%, 41%);
   --color-night-theme1: #6E85B2;
-
   --color-teal-theme2: #D4ECDD;
   --color-navy-theme2: #345B63;
   --color-black-theme2: #152D35;

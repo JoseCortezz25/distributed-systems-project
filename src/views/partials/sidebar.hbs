@@ -1,19 +1,20 @@
 <section class="container-sidebar">
-  <div class="box-profile">
-    <div class="box-profile__images">
-      <img src="/static/images/user-icon-default.jpg" alt="">
+  <a href="/user/johndoe">
+    <div class="box-profile">
+      <div class="box-profile__images" href="/user/johndoe">
+        <img src="/static/images/user-icon-default.jpg" alt="">
+      </div>
+      <div class="box-profile__info">
+        <p class="box-profile__name">user.name </p>
+        <p class="box-profile__username">user.email</p>
+      </div>
     </div>
-    <div class="box-profile__info">
-      <p class="box-profile__name">user.name </p>
-      <p class="box-profile__username">user.email</p>
-    </div>
-  </div>
+  </a>
 
   <div class="button-sidebar">
     <div class="button-sidebar__icon">
       {{!-- <img src="/static/icons/feed-icon.svg" alt=""> --}}
-      <svg width="25" height="25" viewBox="0 0 128 128" fill="none"
-        xmlns="http://www.w3.org/2000/svg">
+      <svg width="25" height="25" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect class="feed-icon-rect" x="5" y="55" width="50" height="68" rx="11" stroke="#51525D" stroke-width="10" />
         <rect class="feed-icon-rect" x="73" y="5" width="50" height="68" rx="11" stroke="#51525D" stroke-width="10" />
         <rect class="feed-icon-rect" x="73" y="91" width="50" height="32" rx="11" stroke="#51525D" stroke-width="10" />

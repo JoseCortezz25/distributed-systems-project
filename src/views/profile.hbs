@@ -1,15 +1,26 @@
 <section class="container-profile">
+
   <div class="section-profile">
+
     <div class="profile-image">
       <img src="/static/images/user-icon-default.jpg" alt="{{ profile.name }}">
     </div>
-  </div>
-  <div class="section-profile">
-    <div class="section-profile__info-principal">
-      <div class="box-info-principal">
-        <h1 class="profile-name">{{user.fullname}}</h1>
-        <p class="profile-profession">{{user.profession}}</p>
+
+    <div class="profile-info">
+      <h1 class="profile-name">{{user.fullname}}</h1>
+      <p class="profile-profession">{{user.profession}}</p>
+      <div class="profile-skills">
+        {{#each user.skills}}
+          <p class="profile-skill">{{this}}</p>
+        {{/each}}
       </div>
+      {{!-- <p class="profile-description">{{user.description}}</p> --}}
     </div>
+
+  </div>
+
+  <div class="section-profile-info">
+    <h2 class="title-section-profile">Description</h2>
+    <p class="profile-description">{{user.description}}</p>
   </div>
 </section>

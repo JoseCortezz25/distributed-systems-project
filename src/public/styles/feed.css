@@ -18,9 +18,11 @@
     width: 70%;
     padding-top: 3rem;
 
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    /* display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 10px; */
     /* border: 1px solid red; */
 }
 

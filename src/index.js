@@ -6,8 +6,8 @@ const exphbs = require('express-handlebars')
 const colors = require('colors')
 const config = require('./config/config')
 const cors = require('cors')
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const { mongoUrl } = require('./config/config')
 

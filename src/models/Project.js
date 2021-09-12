@@ -18,6 +18,10 @@ const projectSchema = new Schema({
     type: Date,
     default: Date.now()
   },
+  url: {
+    type: String,
+    lowercase: true
+  },
   // user: {
   //   type: Schema.Types.ObjectId,
   //   red: 'User'

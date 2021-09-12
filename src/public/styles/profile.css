@@ -1,37 +1,39 @@
 .container-profile {
   width: 100%;
-  height: 100vh;
-
-  display: grid;
-  grid-template-columns: 30% 70%;
+  /* height: 100vh; */
 }
 
 .section-profile {
-  width: 100%;
-  height: auto;
-  margin-top: 37px;
-  /* border: 1px solid red; */
-  display: flex;
-}
-
-.profile-image {
-  width: auto;
-  height: 280px;
-  max-width: 280px;
-  margin: 0 auto;
-  display: inline-block;
-  /* border: 1px solid blue; */
-  /* margin-top: 2.8rem; */
-}
-
-.section-profile__info-principal {
-  width: 100%;
-  height: 230px;
-  /* border: 1px solid green; */
+  padding-top: 4rem;
+  padding-bottom: 1.9rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
 }
+
+.profile-info {
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* border: 1px solid blue; */
+  margin-left: 25px; 
+}
+
+.profile-image {
+  width: 180px;
+  height: 180px;
+  /* border: 1px solid green; */
+}
+.profile-image img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 
 .box-info-principal {
   width: 90%;
@@ -39,18 +41,52 @@
 }
 
 .profile-name {
-  color: var(--color-profile-name);
+  color: #000;
   text-transform: capitalize;
   letter-spacing: -1px;
   font-size: 3.4rem;
-  font-weight: 400;
+  font-weight: 500;
 } 
 
 .profile-profession {
-  color: var(--color-blue);
+  color: var(--color-navy-theme1);
   font-weight: 500;
   text-transform: capitalize;
   letter-spacing: -.5px;
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   line-height: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-description {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  font-weight: lighter;
+}
+
+.profile-skills {
+  width: 100%;
+  padding-top: 15px;
+  /* border: 1px solid green; */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.profile-skill {
+  background-color: hsla(278, 22%, 14%, 80%);
+  color: var(--color-white);
+  font-size: 1.3rem;
+  text-align: center;
+  padding: 8px 11px;
+  border-radius: 25px;
+}
+
+.section-profile-info {
+  width: 80%;
+  margin: auto;
+  padding-top: 3.4rem;
+  padding-bottom: 2rem;
+  border-top: 2px solid var(--color-gray);
+  border-bottom: 2px solid var(--color-gray);
 }

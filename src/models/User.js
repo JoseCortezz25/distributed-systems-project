@@ -31,6 +31,10 @@ const userSchema = new Schema({
   profile: {
     type: Schema.Types.ObjectId,
     red: 'PhotoProfile'
+  },
+  url: {
+    type: String,
+    lowercase: true
   }
 })
 

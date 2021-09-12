@@ -15,27 +15,27 @@
             </div> --}}
             {{#each projects}}
             <div class="card-project">
-                <div class="card-project-header">
-                    <div class="card-project-header__images">
-                        <img src="{{image}}" alt="">
-                    </div>
-                    <p class="card-project-header__username">hola mundo</p>
-                </div>
+
                 <div class="card-project-image">
-                    <img src="{{image_project}}" alt="">
+                    {{!-- <img src="{{image_project}}" alt=""> --}}
+                    <img src="http://lorempixel.com/350/350/" alt="">
                 </div>
+
                 <div class="card-project-body">
-                    <div class="card-project-body-description">
-                        <p>{{description}}</p>
-                    </div>
-                    <div class="card-project-body-tags">
-                        <ul>
-                            {{#each teachnologies}}
+                    <div class="card-project-body__header">
+                        <div class="header-title">{{name}}</div>
+                        <ul class="header-tags">
+                            {{#each technologies}}
                             <li>{{this}}</li>
                             {{/each}}
                         </ul>
                     </div>
+                    <div class="card-project-body__description">
+                        {{{description}}}
+                    </div>
+
                 </div>
+
             </div>
             {{/each}}
         </div>

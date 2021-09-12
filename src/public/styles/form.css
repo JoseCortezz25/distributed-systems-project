@@ -1,0 +1,16 @@
+.input-control {
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 13px 11px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 1.3rem;
+  margin-bottom: 1.3rem;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+
+.input-control::placeholder {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+

@@ -43,7 +43,7 @@ class UserController {
       const newProject = await project.save();
   
       console.log(newProject);
-      res.send("newProject")
+      res.redirect("/home")
     } catch (error) {
       console.log(error)
       res.status(500).send(error)

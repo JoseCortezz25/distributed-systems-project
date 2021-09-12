@@ -16,6 +16,10 @@ const photoProfileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     red: 'User'
+  },
+  url: {
+    type: String,
+    lowercase: true
   }
 })
 

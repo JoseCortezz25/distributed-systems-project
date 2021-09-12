@@ -1,6 +1,7 @@
 const { contantsView: { titlePage, titleProject } } = require('../config/config')
+const projectSchema = require('../models/Project')
 const TITLE_PAGE = titlePage
-const projects = require('../lib/mocks')
+// const projects = require('../lib/mocks')
 
 class HomeController {
   home (req, res) {
@@ -10,11 +11,14 @@ class HomeController {
     })
   }
 
-  homeUser (req, res) {
+  async homeUser (req, res) {
+
+    const projects = await projectSchema.find()
+    // console.log(projects)
     res.render('feed', {
       title: `Feed | ${TITLE_PAGE}`,
       titleProject,
-      projects
+      projects: projects
     })
   }
 }

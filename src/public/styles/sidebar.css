@@ -7,3 +7,8 @@
   background-color: var(--color-white);
   border-right: 1px solid #EDEDF1;
 }
+
+.container-sidebar a {
+  width: 100%;
+  text-decoration: none;
+}
