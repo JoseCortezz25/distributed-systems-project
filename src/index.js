@@ -10,6 +10,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const { mongoUrl } = require('./config/config')
+const errors = require('./lib/errors');
 
 const app = express()
 
@@ -37,8 +38,9 @@ app.use(morgan('dev'))
 const storage = multer.diskStorage({
   destination: path.join(__dirname, 'public/uploads'),
   filename: (req, file, cb) => {
-    console.log('siuuu')
+    console.group("UPLOAD IMAGE NOW")
     console.log(file)
+    console.groupEnd()
     cb(null, new Date().getTime() + path.extname(file.originalname))
   }
 })
@@ -59,9 +61,16 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Routing
+app.use('/api', require('./components/project/project.routes'))
+app.use('/api', require('./components/auth/auth.routes'))
+// app.use('/api', require('./components/user/user.routes'))
+// app.use('/api', require('./routes/api.routes'))
 app.use(require('./routes/routes'))
 
 require('./lib/database')
+
+// Middleware responsible for errors 
+app.use(errors);
 
 // Start
 app.listen(config.port, () => {

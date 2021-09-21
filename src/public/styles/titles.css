@@ -47,3 +47,14 @@
   color: var(--color-black-theme1);
   margin-bottom: 18px;
 }
+
+.title-section-project {
+  font-size: 3.1em;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.subtitle-section-project {
+  font-size: 2rem;
+  text-transform: uppercase;
+}

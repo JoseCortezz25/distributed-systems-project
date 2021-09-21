@@ -1,0 +1,17 @@
+<section class="container-single-project">
+  <div class="section-single-project">
+    {{!-- <img src="https://via.placeholder.com/650" alt=""> --}}
+    {{!-- <img src="{{project.path}}" alt=""> --}}
+    <img src="{{photo.imageURL}}" alt="">
+  </div>
+  <div class="section-single-project">
+    <h1 class="title-section-project">{{project.name}}</h1>
+    <div class="description-project">{{{project.description}}}</div>
+    <h3 class="subtitle-section-project">Technologies used in the project</h3>
+    <ul class="header-tags">
+      {{#each project.technologies}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</section>

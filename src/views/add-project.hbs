@@ -2,15 +2,11 @@
   <div class="container-add-project__content">
     <h2 class="title-principal-form">Add new project in your portfolio</h2>
 
-    <form 
-      class="container-add-project__form" 
-      action="/project/add" 
-      method="POST">
-      
-      {{!-- <div class="container-add-project__form-group"> --}}
-        <label for="name">Name of the project</label>
-        <input type="text" name="name" placeholder="Enter the name of your project" class="input-control">
-      {{!-- </div> --}}
+    <form class="container-add-project__form" action="/project/add" method="POST" enctype="multipart/form-data">
+
+      <label for="name">Name of the project</label>
+      <input type="text" name="name" placeholder="Enter the name of your project" class="input-control">
+
 
       <label for="description">Description of the project</label>
 
@@ -22,6 +18,11 @@
         {{#selectTechnologies a}}
         {{/selectTechnologies}}
       </div>
+
+      <label for="">Upload an image of the project</label>
+      <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
+      <label for="inputGroupFile01" class="custom-file-label">Choose file</label>
+
       <input type="hidden" name="technologies" id="technologies">
       <input type="submit" value="Add project" class="btn-standard btn-form">
     </form>

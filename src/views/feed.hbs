@@ -14,29 +14,31 @@
                 </p>
             </div> --}}
             {{#each projects}}
-            <div class="card-project">
+                <a class="link-card-project" href="/project/{{url}}">
+                    <div class="card-project">
 
-                <div class="card-project-image">
-                    {{!-- <img src="{{image_project}}" alt=""> --}}
-                    <img src="http://lorempixel.com/350/350/" alt="">
-                </div>
+                        <div class="card-project-image">
+                            {{!-- <img src="{{image_project}}" alt=""> --}}
+                            <img src={{image_project.imageURL}} alt="">
+                        </div>
 
-                <div class="card-project-body">
-                    <div class="card-project-body__header">
-                        <div class="header-title">{{name}}</div>
-                        <ul class="header-tags">
-                            {{#each technologies}}
-                            <li>{{this}}</li>
-                            {{/each}}
-                        </ul>
+                        <div class="card-project-body">
+                            <div class="card-project-body__header">
+                                <div class="header-title">{{name}}</div>
+                                <ul class="header-tags">
+                                    {{#each technologies}}
+                                    <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            <div class="card-project-body__description">
+                                {{{description}}}
+                            </div>
+
+                        </div>
+
                     </div>
-                    <div class="card-project-body__description">
-                        {{{description}}}
-                    </div>
-
-                </div>
-
-            </div>
+                </a>
             {{/each}}
         </div>
     </div>

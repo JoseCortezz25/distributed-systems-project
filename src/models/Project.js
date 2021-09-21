@@ -22,13 +22,13 @@ const projectSchema = new Schema({
     type: String,
     lowercase: true
   },
-  // user: {
+  image_project: {
+    type: Schema.Types.ObjectId,
+    ref: 'Photo',
+  },
+  // user_id: {
   //   type: Schema.Types.ObjectId,
-  //   red: 'User'
-  // },
-  // image_project: {
-  //   type: Schema.Types.ObjectId,
-  //   red: 'Photo'
+  //   ref: 'User',
   // }
 })
 

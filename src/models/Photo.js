@@ -3,20 +3,45 @@ const slug = require('slug');
 const shortid = require('shortid');
 
 const photoSchema = new Schema({
-  title: { type: String },
-  description: { type: String },
-  filename: { type: String },
-  path: { type: String },
-  originalname: { type: String },
-  mimetype: { type: String },
-  size: { type: Number },
-  created_at: { type: Date, default: Date.now() },
-  imageURL: String,
-  public_id: String
+  filename: {
+    type: String
+  },
+  path: {
+    type: String
+  },
+  originalname: {
+    type: String
+  },
+  mimetype: {
+    type: String
+  },
+  size: { 
+    type: Number
+  },
+  project_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Project'
+  },
+  created_at: {
+    type: Date, 
+    default: Date.now()
+  },
+  url: {
+    type: String,
+    lowercase: true
+  },
+  imageURL: {
+    type: String,
+    lowercase: true
+  },
+  public_id: {
+    type: String,
+    lowercase: true
+  }
 })
 
-photoProfileSchema.pre('save', function (next) {
-  const url = slug(this.title);
+photoSchema.pre('save', function (next) {
+  const url = slug(this.filename);
   this.url = `${url}-${shortid.generate()}`;
   next();
 });

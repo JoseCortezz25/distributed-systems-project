@@ -1,6 +1,8 @@
-# Distributed Systems Project
+# Mi Folio App - Distributed Systems Project 
 
-This is an educational project for the distributed systems course created with Express and Handlebars.
+![](screenshot.png)
+
+Mi Folio App is an educational project for the distributed systems course created with Express and Handlebars.
 
 ## 🚀 Installation
 **Clone the repository**

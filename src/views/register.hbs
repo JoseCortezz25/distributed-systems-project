@@ -6,7 +6,7 @@
             </div> --}}
             <h2 class="title-principal-form">Register</h2>
 
-            <form action="">
+            <form action="/api/register/" method="POST">
                 <label for="fullname">Fullname</label>
                 <input type="text" class="input-control" id="fullname" placeholder="Enter your fullname">
 
@@ -15,6 +15,8 @@
 
                 <label for="password">Password</label>
                 <input type="password" class="input-control" id="password" placeholder="Enter your password">
+                <label for="password">Confirm password</label>
+                <input type="confirmpassword" class="input-control" id="password-confirmed" placeholder="Enter your password again">
 
                 <label for="description">Description</label>
                 <input type="text" class="input-control" id="description" placeholder="Enter your description">
@@ -22,15 +24,16 @@
                 <label for="profession">Profession</label>
                 <input type="text" class="input-control" id="profession" placeholder="Enter your profession">
 
-                <label for="profession">Skills</label>
+                {{!-- <label for="profession">Skills</label>
                 <div class="knowledge-list">
                     {{#seleccionarSkills a}}
                     {{/seleccionarSkills}}
                 </div>
                 <div class="campo centrar-horizontal">
                     <input type="hidden" name="skills" id="skills">
-                </div>
+                </div> --}}
 
+                <a href="/login">Do you already have an account? Login now</a>
                 <button type="submit" class="btn-standard btn-form">Register</button>
             </form>
         </div>

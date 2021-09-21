@@ -12,14 +12,18 @@ class HomeController {
   }
 
   async homeUser (req, res) {
+    try {
+      const projects = await projectSchema.find().populate('image_project')
+      console.log(projects)
+      res.render('feed', {
+        title: `Feed | ${TITLE_PAGE}`,
+        titleProject,
+        projects: projects
+      })
+    } catch (error) {
+      res.status(500).send(error)
 
-    const projects = await projectSchema.find()
-    // console.log(projects)
-    res.render('feed', {
-      title: `Feed | ${TITLE_PAGE}`,
-      titleProject,
-      projects: projects
-    })
+    }
   }
 }
 

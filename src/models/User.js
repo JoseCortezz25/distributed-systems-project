@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose')
-const slug = require('slug');
-const shortid = require('shortid');
+const bcrypt = require('bcrypt')
 
 const userSchema = new Schema({
   fullname: {
@@ -11,11 +10,18 @@ const userSchema = new Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
     trim: true
   },
   password: {
     type: String,
     required: true
+  },
+  email: {
+    type: String,
+    unique: true,
+    lowercase: true,
+    trim: true
   },
   description: {
     type: String,
@@ -27,22 +33,25 @@ const userSchema = new Schema({
     required: true,
     trim: true
   },
-  skills: [String],
+  // skills: [String],
   profile: {
     type: Schema.Types.ObjectId,
-    red: 'PhotoProfile'
+    ref: 'PhotoProfile'
   },
-  url: {
-    type: String,
-    lowercase: true
-  }
+  token: String,
+  expiration: Date
 })
 
-userSchema.pre('save', function (next) {
-  const url = slug(this.username);
-  this.url = `${url}-${shortid.generate()}`;
-  next();
-});
+
+userSchema.pre('save', async function (next) {
+  try {
+    if (!this.isModified('password')) return next()
+    this.password = await bcrypt.hash(this.password, 10)
+    next()
+  }catch(err) {
+    next(err)
+  }
+})
 
 const User = model('User', userSchema)
 module.exports = User
