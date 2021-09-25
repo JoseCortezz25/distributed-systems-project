@@ -14,8 +14,8 @@ const config = {
   mongoUrl: `mongodb+srv://${encodeURIComponent(process.env.DB_USER)}:${encodeURIComponent(process.env.DB_PASSWORD)}@clusterdistributedsyste.unokf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
 
   contantsView: {
-    titleProject: 'Mi Folio',
-    titlePage: 'MiFolio'
+    titleProject: 'Mi Folio App',
+    titlePage: 'Mi Folio App'
   },
 
   cloudinary: {

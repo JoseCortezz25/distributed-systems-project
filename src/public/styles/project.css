@@ -11,8 +11,8 @@
   /* border: 1px solid red; */
 }
 
-.section-single-project:nth-of-type(1) {
-  
+.container-single-project .header-tags{
+  margin-left: 2rem;
 }
 
 .section-single-project:nth-of-type(1) img {
@@ -23,10 +23,11 @@
 
 .section-single-project:nth-of-type(2) {
   padding: 30px 40px;
+  overflow-y: scroll;
 }
 
 .description-project{
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: var(--color-text-default);
   margin-bottom: 15px;
 }

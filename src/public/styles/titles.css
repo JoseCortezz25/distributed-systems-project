@@ -25,10 +25,10 @@
 }
 
 .description-initial-page {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1.7em;
-  color: #000;
-  line-height: 20px;
+  /* font-family: 'Roboto', sans-serif; */
+  /* font-size: 1.7em; */
+  /* color: #000; */
+  line-height: 2rem;
   margin-top: 1.7rem;
   text-align: justify;
 }
@@ -42,14 +42,14 @@
 }
 
 .title-section-profile {
-  font-size: 2em;
+  /* font-size: 2em; */
   text-transform: uppercase;
   color: var(--color-black-theme1);
   margin-bottom: 18px;
 }
 
 .title-section-project {
-  font-size: 3.1em;
+  font-size: 3rem;
   text-transform: uppercase;
   margin-bottom: 15px;
 }

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    {{!-- <link rel="icon" href="/static/icons/new-icon-favicon.ico" type="image/x-icon" /> --}}
     {{!-- <link rel="stylesheet" href="/styles/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="/styles/trix.css">
 
@@ -28,6 +29,12 @@
 <body>
     {{>navbar}}
     <div class="">
+        {{#if messages}}
+            <div class="alerts">
+                {{#showAlerts messages}}
+                {{/showAlerts}}
+            </div>
+        {{/if}}
         {{{body}}}
     </div>
 <script src="/dist/bundle.js"></script>

@@ -2,6 +2,7 @@ const cloudinary = require('cloudinary')
 const ProjectSchema = require('../../models/Project')
 const PhotoSchema = require('../../models/Photo')
 const response = require('../../lib/response')
+const colors = require('colors')
 const { 
   contantsView: { 
     titlePage 
@@ -41,17 +42,11 @@ class ProjectController {
     try {
       const project = await ProjectSchema.findOne({url: req.params.url}).populate('image_project')
       if (!project) {
-        return res.status(404).json({
-          message: 'Project not found'
-        })
+        return response.error(res, req, 'Project not found', 404)
       }
-
-      return res.status(200).json({
-        message: 'Project found',
-        data: project
-      })
+      return  response.success(res, req, project, 200)
     } catch (error) {
-      res.status(500).send(error)
+      response.error(res, req, error, 500)
     }
   }
 
@@ -59,26 +54,15 @@ class ProjectController {
     const { filename, path, size, mimetype, originalname } = req.file
     const { name, description, technologies } = req.body
     try {
-      console.group('-------> create a new project')
-      console.log('INFO PRE | upload image to cloudinary')
       const result = await cloudinary.v2.uploader.upload(path)
-      console.log(result)
-      console.log('INFO POST | upload image to cloudinary')
-
-      console.log('INFO 1 | create project')
       const project = new ProjectSchema({
         name,
         description
       })
       project.technologies = technologies.split(',');
-      // project.technologies = ['HTML', 'CSS', 'JS']
       const newProject = await project.save();
-      console.log('INFO 2 | save project')
-      
-      console.log('INFO 3 | create photo')
       const photo = new PhotoSchema({
         filename,
-        path,
         originalname,
         mimetype,
         size,
@@ -86,9 +70,7 @@ class ProjectController {
         public_id: result.public_id
       })
       
-      const newPhoto = await photo.save();
-      console.log('INFO 4 | save photo')
-      console.log('INFO 5 | create project with photo')
+      const newPhoto = await photo.save()
       const projectWithPhoto = await ProjectSchema.findOneAndUpdate(
         { url: newProject.url }, 
         {image_project: newPhoto._id},
@@ -97,15 +79,70 @@ class ProjectController {
           runValidators: true
         }
       )
-      console.log(projectWithPhoto)
-      console.log('INFO 6 | finilished process')
-      res.status(201).json(projectWithPhoto)
-      console.groupEnd()
       response.success(res, req, projectWithPhoto, 201)
     } catch (error) {
       console.log(error)
-      response.success(res, req, error, 500)
-      // res.status(500).send(error)
+      response.error(res, req, error, 500)
+    }
+  }
+
+  async updateProject(req, res) {
+    try {
+      if (!req.params.url) {
+        return response.error(res, req, 'URL parameter is required', 404)
+      }
+      console.group(colors.bgGreen.black('Update Project'))
+      console.log('req.body', req.body)
+      // console.log('url', url)
+      console.log('req.file', req.file)
+
+      const theProjectExist = await ProjectSchema.findOne({ url: req.params.url }).populate('image_project')
+      if (!theProjectExist) {
+        return response.error(res, req, 'Project not found. ', 404)
+      }
+      console.log(colors.bgCyan('theProjectExist'), theProjectExist)
+      // const theProjectExist = await ProjectSchema.findOne({ url: req.params.url }).populate('image_project')
+      // if (!theProjectExist) res.redirect('/*')
+
+      // const { filename, path, size, mimetype, originalname } = req.file || theProjectExist.image_project
+      // const projectToUpdate = req.body
+      
+      // const result = await cloudinary.v2.uploader.upload(path)
+      // const updatedImage = await PhotoSchema.findOneAndUpdate({
+      //   _id: theProjectExist.image_project
+      // },
+      //   {
+      //     filename,
+      //     path,
+      //     originalname,
+      //     mimetype,
+      //     size,
+      //     imageURL: result.url,
+      //     public_id: result.public_id
+      //   },
+      //   {
+      //     new: true,
+      //     runValidators: true
+      //   }
+      // )
+      // projectToUpdate.image_project = updatedImage._id
+      // projectToUpdate.technologies = !projectToUpdate.technologies ? theProjectExist.technologies : [...theProjectExist.technologies, ...projectToUpdate.technologies.split(',')]
+      // const project = await ProjectSchema.findOneAndUpdate(
+      //   {
+      //     url: req.params.url
+      //   },
+      //   projectToUpdate,
+      //   {
+      //     new: true,
+      //     runValidators: true
+      //   }
+      // )
+      // res.redirect(`/project/${project.url}`)
+      console.groupEnd()
+
+    } catch (error) {
+      console.log(error)
+      res.status(500).send(error)
     }
   }
 }

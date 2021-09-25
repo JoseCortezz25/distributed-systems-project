@@ -10,7 +10,9 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const { mongoUrl } = require('./config/config')
-const errors = require('./lib/errors');
+const errors = require('./lib/errors')
+const expressValidator = require('express-validator')
+const flash = require('connect-flash')
 
 const app = express()
 
@@ -33,18 +35,21 @@ app.set('view engine', '.hbs')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(morgan('dev'))
+// app.use(morgan('dev'))
 
+// Config Multer
 const storage = multer.diskStorage({
   destination: path.join(__dirname, 'public/uploads'),
   filename: (req, file, cb) => {
-    console.group("UPLOAD IMAGE NOW")
+    console.group('UPLOAD IMAGE NOW')
     console.log(file)
     console.groupEnd()
     cb(null, new Date().getTime() + path.extname(file.originalname))
   }
 })
 app.use(multer({ storage }).single('image'))
+
+app.use(expressValidator())
 
 //session
 app.use(session({
@@ -55,7 +60,15 @@ app.use(session({
   store: MongoStore.create({
     mongoUrl: mongoUrl,
   })
-}));
+}))
+
+// Settings and connect flash
+app.use(flash())
+
+app.use((req, res, next) => {
+  res.locals.messages = req.flash()
+  next()
+})
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')))

@@ -1,7 +1,8 @@
 .container-feed {
+    background-color: var(--color-gray);
     width: 100%;
-    display: grid;
-    grid-template-columns: 18% 1fr;
+    /* display: grid;
+    grid-template-columns: 18% 1fr; */
 }
 
 .box-feed:nth-of-type(2) {
@@ -15,11 +16,14 @@
 }
 
 .feed-general {
-    width: 70%;
+    width: 80%;
+    margin: auto;
     padding-top: 3rem;
 
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    justify-content: space-between;
     /* display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px; */

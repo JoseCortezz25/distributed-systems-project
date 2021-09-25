@@ -1,14 +1,4 @@
 class UserController {
-  // Create a new user
-  createUser (req, res) {
-    
-  }
-
-  // Login a user
-  loginUser (req, res) {
-
-  }
-
   getUser (req, res) {
   }
 }

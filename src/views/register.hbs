@@ -1,39 +1,66 @@
 <section class="container-register">
     <div class="section-register">
         <div class="section-register__info">
-            {{!-- <div class="section-register__logo">
-                <img src="/static/icons/logo2.svg" alt="">
-            </div> --}}
             <h2 class="title-principal-form">Register</h2>
 
-            <form action="/api/register/" method="POST">
+            <form action="/register" method="POST">
                 <label for="fullname">Fullname</label>
-                <input type="text" class="input-control" id="fullname" placeholder="Enter your fullname">
+                <input 
+                    type="text" 
+                    class="input-control" 
+                    id="fullname" 
+                    name="fullname"
+                    placeholder="Enter your fullname">
 
                 <label for="username">Username</label>
-                <input type="text" class="input-control" id="username" placeholder="Enter your username">
+                <input 
+                    type="text" 
+                    class="input-control" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Enter your username">
+                
+                <label for="email">Email</label>
+                <input 
+                    type="email" 
+                    class="input-control" 
+                    id="email" 
+                    name="email" 
+                    placeholder="Enter your username">
 
                 <label for="password">Password</label>
-                <input type="password" class="input-control" id="password" placeholder="Enter your password">
-                <label for="password">Confirm password</label>
-                <input type="confirmpassword" class="input-control" id="password-confirmed" placeholder="Enter your password again">
+                <input 
+                    type="password" 
+                    class="input-control" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Enter your password">
+                
+                <label for="password-confirmed">Confirm password</label>
+                <input 
+                    type="password" 
+                    class="input-control" 
+                    id="password-confirmed" 
+                    name="confirmpassword" 
+                    placeholder="Enter your password again">
 
                 <label for="description">Description</label>
-                <input type="text" class="input-control" id="description" placeholder="Enter your description">
+                <input 
+                    type="text" 
+                    class="input-control" 
+                    id="description" 
+                    name="description" 
+                    placeholder="Enter your description">
 
                 <label for="profession">Profession</label>
-                <input type="text" class="input-control" id="profession" placeholder="Enter your profession">
+                <input 
+                    type="text" 
+                    class="input-control" 
+                    id="profession" 
+                    name="profession" 
+                    placeholder="Enter your profession">
 
-                {{!-- <label for="profession">Skills</label>
-                <div class="knowledge-list">
-                    {{#seleccionarSkills a}}
-                    {{/seleccionarSkills}}
-                </div>
-                <div class="campo centrar-horizontal">
-                    <input type="hidden" name="skills" id="skills">
-                </div> --}}
-
-                <a href="/login">Do you already have an account? Login now</a>
+                <a href="/login" class="link-redirect">Do you already have an account? Login now</a>
                 <button type="submit" class="btn-standard btn-form">Register</button>
             </form>
         </div>

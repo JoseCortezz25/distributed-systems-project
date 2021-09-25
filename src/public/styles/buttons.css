@@ -27,6 +27,23 @@
   color: var(--color-black-theme1);
 }
 
+.btn-edit {
+  /* background-color: var(--color-winter-theme2); */
+  color: var(--color-black-theme1);
+  border: 2px solid var(--color-black-theme1);
+}
+
+.btn-add {
+  background-color: var(--color-winter-theme2);
+  color: var(--color-white);
+}
+
+.btn-delete {
+  background-color: var(--color-alert-strong-warn);
+  color: var(--color-white);
+  border: 2px solid var(--color-alert-strong-warn);
+}
+
 .btn-form:hover {
   background-color: var(--color-white);
   color: var(--color-black-theme1);
@@ -43,4 +60,29 @@
   background-color: var(--color-black-theme1);
   color: var(--color-white);
   box-shadow: -3px -3px 0px 0px var(--color-black-theme1);
+}
+
+.btn-edit:hover {
+  background-color: var(--color-white);
+  color: var(--color-winter-them2);
+  box-shadow: -3px -3px 0px 0px var(--color-winter-theme2);
+}
+
+.btn-add:hover {
+  background-color: var(--color-white);
+  color: var(--color-winter-them2);
+  box-shadow: -3px -3px 0px 0px var(--color-winter-theme2);
+}
+
+.btn-delete:hover {
+  background-color: var(--color-white);
+  color: var(--color-alert-strong-warn);
+  box-shadow: -3px -3px 0px 0px var(--color-alert-strong-warn);
+}
+
+.link-redirect {
+  display: block;
+  margin-top: 1.2rem;
+  color: var(--color-black);
+  text-decoration: none;
 }

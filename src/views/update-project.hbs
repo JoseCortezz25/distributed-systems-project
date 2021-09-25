@@ -5,12 +5,15 @@
     <form 
       class="container-add-project__form" 
       action="/project/update/{{project.url}}" 
-      method="POST">
-      
+      method="POST"
+      enctype="multipart/form-data">
+
       {{!-- <div class="container-add-project__form-group"> --}}
         <label for="name">Name of the project</label>
-        <input type="text" name="name" value="{{project.name}}" placeholder="Enter the name of your project" class="input-control">
-      {{!-- </div> --}}
+        <input type="text" name="name" value="{{project.name}}" placeholder="Enter the name of your project"
+          class="input-control">
+        {{!--
+      </div> --}}
 
       <label for="description">Description of the project</label>
 
@@ -18,11 +21,16 @@
       <trix-editor class="container-trix" input="description"></trix-editor>
 
       <label for="">Technologies used in the project</label>
-      <div class="knowledge-list-addproject">
+      <div class="knowledge-list-updateproject">
         {{#selectTechnologies project.technologies}}
         {{/selectTechnologies}}
       </div>
-      <input type="hidden" name="technologies" value="{{project.technologies}}" id="technologies">
+
+      <label for="">Upload an image of the project</label>
+      <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
+      <label for="inputGroupFile01" class="custom-file-label">Choose file</label>
+
+      <input type="hidden" name="technologies" id="technologies">
       <input type="submit" value="Update the project" class="btn-standard btn-form">
     </form>
   </div>

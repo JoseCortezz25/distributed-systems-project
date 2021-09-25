@@ -27,6 +27,9 @@
 
 .container-add-project__form label {
   font-size: 1.7rem;
+  display: block;
+  margin-top: 1.7rem;
+  margin-bottom: 1rem;
 }
 
 .container-trix {
@@ -50,6 +53,28 @@
 }
 
 .knowledge-list-addproject li {
+  background-color: var(--color-white);
+  width: 100%;
+  padding: 11px 5px;
+  list-style:none;
+  font-size: 1.4rem;
+  border: 2px solid var(--color-black-theme1);
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  cursor: pointer;
+}
+
+.knowledge-list-updateproject {
+  width: 100%;
+  /* border: 1px solid red; */
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.knowledge-list-updateproject li {
   background-color: var(--color-white);
   width: 100%;
   padding: 11px 5px;

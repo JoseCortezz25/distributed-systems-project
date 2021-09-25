@@ -1,7 +1,8 @@
 .container-login {
     background-color: var(--color-gray);
     width: 100%;
-    height: calc(100vh - 70px);
+    /* height: calc(100vh - 70px); */
+    height: 100vh;
     font-size: 1.8rem;
 
     display: flex;
@@ -25,9 +26,11 @@
 }
 
 .section-login .section-login__info label {
+    display: block;
     font-weight: 500;
     color: var(--color-black);
-    margin-bottom: .6rem;
+    margin-top: 1.3rem;
+    margin-bottom: 1.3rem;
 }
 
 .section-login .section-login__logo {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{!--
+  <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" /> --}}
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/styles/trix.css">
+  <link rel="stylesheet" href="/styles/header.css">
+  <link rel="stylesheet" href="/styles/feed.css">
+  <link rel="stylesheet" href="/styles/global.css">
+  <link rel="stylesheet" href="/styles/components.css">
+  <link rel="stylesheet" href="/styles/project.css">
+  <link rel="stylesheet" href="/styles/titles.css">
+  <link rel="stylesheet" href="/styles/login.css">
+  <link rel="stylesheet" href="/styles/initial-page.css">
+  <link rel="stylesheet" href="/styles/buttons.css">
+  <link rel="stylesheet" href="/styles/register.css">
+  <link rel="stylesheet" href="/styles/profile.css">
+  <link rel="stylesheet" href="/styles/sidebar.css">
+  <link rel="stylesheet" href="/styles/buttons-sidebar.css">
+  <link rel="stylesheet" href="/styles/project-feed.css">
+  <link rel="stylesheet" href="/styles/addProject.css">
+  <link rel="stylesheet" href="/styles/form.css">
+</head>
+
+<body>
+  <section class="container-general">
+    {{#if messages}}
+      <div class="alertas">
+        {{#showAlerts messages}}
+        {{/showAlerts}}
+      </div>
+    {{/if}}
+    {{{body}}}
+  </section>
+
+  <script src="/dist/bundle.js"></script>
+  <script src="/js/trix.js"></script>
+  <script src="https://unpkg.com/@appnest/masonry-layout/umd/masonry-layout.min.js"></script>
+</body>
+
+</html>
