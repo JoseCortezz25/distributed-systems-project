@@ -15,7 +15,7 @@ class HomeController {
   async homeUser (req, res) {
     try {
       const projects = await projectSchema.find().populate('image_project')
-      console.log(projects)
+      // console.log(projects)
       res.render('feed', {
         title: `Feed | ${TITLE_PAGE}`,
         titleProject,
@@ -58,7 +58,7 @@ class HomeController {
   async feedView (req, res) {
     try {
       const projects = await projectSchema.find().populate('image_project')
-      console.log(projects)
+      // console.log(projects)
       res.render('feed', {
         title: `Feed | ${TITLE_PAGE}`,
         titleProject,

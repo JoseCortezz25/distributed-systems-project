@@ -158,7 +158,20 @@ class ProjectController {
   }
 
   /* Method for deleting a project by ID */
-  async deleteProjectById(req, res) {
+  async deleteProjectByUrl(req, res) {
+    try {
+      console.log(colors.bgCyan(`Deleting project ${req.params.url}`))
+      const project = await ProjectSchema.findOne({ url: req.params.url }).populate('image_project')
+      if (!project) res.redirect('/*')
+      const { image_project: { public_id }, } = project
+      await cloudinary.v2.uploader.destroy(public_id)
+      await PhotoSchema.findOneAndRemove({ url: image_project.url })
+      await ProjectSchema.findOneAndRemove({ url: req.params.url })
+      console.log(colors.bgCyan(`Project ${req.params.url} deleted :)`).black);
+      res.redirect('/feed')
+    } catch (error) {
+      res.status(500).send(error)
+    }
   }
 
 } 

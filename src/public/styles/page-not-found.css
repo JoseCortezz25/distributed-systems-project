@@ -1,0 +1,38 @@
+.container-error {
+  width: 100%;
+  /* height: calc(100vh - 70px); */
+  /* border: 1px solid red; */
+  padding-top: 2rem;
+  
+  display: flex;
+  justify-content: center;
+}
+
+.container-error__title {
+  margin-bottom: 2rem;
+}
+
+.container-error__content {
+  display: inline-block;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-error__images {
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container-error__images img {
+  width: 100%;
+  height: 100%;
+}
+
+.container-error__icon {
+  font-size: 1.8rem;
+}

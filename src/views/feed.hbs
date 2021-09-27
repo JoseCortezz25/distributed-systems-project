@@ -1,11 +1,6 @@
 <div class="container-feed">
-    {{!-- <div class="box-feed">
-        {{> sidebar}}
-    </div>
-
-    <div class="box-feed"> --}}
-        
-        <div class="feed-general">
+    <div class="feed-general">
+        <masonry-layout cols="3" gap="20">
             {{#each projects}}
             <a class="link-card-project" href="/project/{{url}}">
                 <div class="card-project">
@@ -27,6 +22,6 @@
                 </div>
             </a>
             {{/each}}
-        </div>
-    {{!-- </div> --}}
+        </masonry-layout>
+    </div>
 </div>

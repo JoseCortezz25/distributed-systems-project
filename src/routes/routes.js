@@ -21,6 +21,7 @@ router.post('/project/add', ProjectController.addProject)
 router.get('/project/:url', ProjectController.singleProjectView)
 router.get('/project/update/:url', ProjectController.formUpdateProjectView)
 router.post('/project/update/:url', ProjectController.updateProject)
+router.get('/project/delete/:url', ProjectController.deleteProjectByUrl)
 // router.delete('/project/delete', UserController.addProject)
 
 // Error View
