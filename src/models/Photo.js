@@ -6,9 +6,6 @@ const photoSchema = new Schema({
   filename: {
     type: String
   },
-  // path: {
-  //   type: String
-  // },
   originalname: {
     type: String
   },

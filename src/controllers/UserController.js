@@ -3,7 +3,7 @@ const { contantsView: { titlePage }, cloudinary: { cloud_name, api_key, api_secr
 const ProjectSchema = require('../models/Project')
 const colors = require('colors')
 const PhotoSchema = require('../models/Photo')
-const User = require('../models/User')
+const UserSchema  = require('../models/User')
 const response = require('../lib/response')
 const fs = require('fs-extra')
 const TITLE_PAGE = titlePage
@@ -14,11 +14,14 @@ cloudinary.config({
 })
 
 class UserController {
+
+  /* 🍔 ---- Views ---- 🍔 */
+  /* 🍎 ----  Logic ---- 🍎 */
   async profile(req, res) {
     try {
       const { name } = req.params
 
-      const user = await User.findOne({ username: name })
+      const user = await UserSchema.findOne({ username: name })
 
       res.render('profile', {
         title: `${name} | ${TITLE_PAGE}`,
@@ -30,29 +33,107 @@ class UserController {
   }
 
   async register(req, res) {
-    try {
-      const {
-        username,
-      } = req.body
+    const errors = req.validationErrors()
+    if (!errors) {
+      try {
+        const theUserExist = await UserSchema.findOne({ username: req.body.username })
+        if (!theUserExist) req.flash('error', 'Username already exist')
 
-      const theUserExist = await UserSchema.findOne({ username: username })
-      if (theUserExist) {
-        return res.status(404).send('username already exist')
+        const user = new UserSchema(req.body)
+        const newUser = await user.save()
+
+        req.flash('correcto', 'You have successfully registered')
+        res.redirect('/login')
+      } catch (error) {
+        console.log(error)
+        req.flash('error', error)
+        res.redirect('/register')
       }
-
-      const user = new UserSchema(req.body)
-      const newUser = await user.save()
-      res.render('home', {
-        title: `${username}'s home' | ${TITLE_PAGE}`,
-        user: newUser
-      })
-    } catch (error) {
-      console.log(error)
-      res.status(500).send(error)
     }
   }
 
-  validateRegisters(req, res) {
+  async login(req, res) {
+    
+  }
+
+  async userUpdateView(req, res) {
+    try {
+      const { name } = req.params
+      const user = await UserSchema.findOne({ username: name })
+      res.render('update-user', {
+        title: `Updating ${user.username} | ${TITLE_PAGE}`,
+        user
+      })
+    } catch (error) {
+      res.redirect('/*')
+    }
+  }
+
+  async userUpdate(req, res) {
+    try {
+      const { name } = req.params
+      console.log('username', name);
+      const theUserExist = await UserSchema.findOne({ username: name })
+      if (!theUserExist) res.redirect('/*')      
+      req.body.username = name
+      // if (req.file) {
+      //   console.log(colors.bgCyan.black('Uploading image...'))
+      //   const { filename, path, size, mimetype, originalname } = req.file
+      //   const result = await cloudinary.v2.uploader.upload(path)
+      //   await fs.unlink(path)
+      //   const profilePicture = await PhotoSchema.findOneAndUpdate({
+      //     _id: theUserExist.profile_image_id
+      //   },
+      //   {
+      //     filename,
+      //     originalname,
+      //     mimetype,
+      //     size,
+      //     imageURL: result.url,
+      //     public_id: result.public_id
+      //   },
+      //   {
+      //     new: true,
+      //     runValidators: true
+      //   })
+      //   req.body.profile_image_id = profilePicture._id
+      //   await UserSchema.findOneAndUpdate(
+      //     {
+      //       username: req.params.name
+      //     },
+      //     req.body,
+      //     {
+      //       new: true,
+      //       runValidators: true
+      //     }
+      //     )
+      //     return res.redirect(`/user/${theUserExist.username}`)
+      //   } 
+        
+      // if(!req.file){
+        console.log(req.body);
+        // console.log(colors.bgCyan.black('There isnt image...'))
+        await UserSchema.findOneAndUpdate(
+            {
+              username: name
+            },
+            req.body,
+            {
+              new: true,
+              runValidators: true
+            }
+          )
+        return res.redirect(`/user/${theUserExist.username}`)
+      // }
+
+    } catch (error) {
+      console.log(error)
+      req.flash('error', error)
+      res.redirect('/*')
+    }
+  }
+
+  validateRegisters(req, res, next) {
     // sanitizer
     req.sanitizeBody('fullname').escape()
     req.sanitizeBody('username').escape()
@@ -74,7 +155,8 @@ class UserController {
     req.checkBody('profession', 'Profession is required').notEmpty()
 
     const errors = req.validationErrors()
-    // console.log(errors)
+    console.log(colors.bgMagenta.black('errors', errors))
+    console.log(errors)
     if (errors) {
       req.flash('error', errors.map(err => err.msg))
       res.render('register', {

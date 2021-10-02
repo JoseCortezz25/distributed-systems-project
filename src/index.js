@@ -13,6 +13,7 @@ const { mongoUrl } = require('./config/config')
 const errors = require('./lib/errors')
 const expressValidator = require('express-validator')
 const flash = require('connect-flash')
+const passport = require('passport')
 
 const app = express()
 
@@ -62,6 +63,10 @@ app.use(session({
   })
 }))
 
+// Use passport
+app.use(passport.initialize())
+app.use(passport.session())
+
 // Settings and connect flash
 app.use(flash())
 
@@ -77,10 +82,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/api', require('./components/project/project.routes'))
 app.use('/api', require('./components/auth/auth.routes'))
 // app.use('/api', require('./components/user/user.routes'))
-// app.use('/api', require('./routes/api.routes'))
 app.use(require('./routes/routes'))
 
 require('./lib/database')
+require('./lib/passport')
 
 // Middleware responsible for errors 
 app.use(errors);

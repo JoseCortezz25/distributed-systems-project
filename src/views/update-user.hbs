@@ -1,0 +1,37 @@
+<div class="container-add-project">
+  <div class="container-add-project__content">
+      <h2 class="title-principal-form">Update your information</h2>
+
+      <form 
+        action="/user-update/{{user.username}}" 
+        method="POST" 
+        class="container-add-project__form" 
+        enctype="multipart/form-data">
+
+        <label for="fullname">Fullname</label>
+        <input type="text" class="input-control" id="fullname" name="fullname" value="{{user.fullname}}"
+          placeholder="Enter you fullname">
+
+        {{!-- <label for="username">Username</label>
+        <input type="text" class="input-control" id="username" name="username" value="{{user.username}}"
+          placeholder="Enter your username"> --}}
+
+        <label for="email">Email</label>
+        <input type="email" class="input-control" id="email" name="email" value="{{user.email}}"
+          placeholder="Enter your username">
+
+        <label for="description">Description</label>
+        <input type="text" class="input-control" id="description" name="description" value="{{user.description}}"
+          placeholder="Enter your description">
+
+        <label for="profession">Profession</label>
+        <input type="text" class="input-control" id="profession" name="profession" value="{{user.profession}}"
+          placeholder="Enter your profession">
+
+        {{!-- <label for="">Upload a profile picture</label>
+        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01"> --}}
+
+        <button type="submit" class="btn-standard btn-form">Update my profile information</button>
+      </form>
+  </div>
+</div>

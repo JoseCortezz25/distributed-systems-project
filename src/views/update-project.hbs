@@ -1,19 +1,16 @@
 <div class="container-add-project">
   <div class="container-add-project__content">
     <h2 class="title-principal-form">Update project</h2>
-
     <form 
       class="container-add-project__form" 
       action="/project/update/{{project.url}}" 
       method="POST"
       enctype="multipart/form-data">
 
-      {{!-- <div class="container-add-project__form-group"> --}}
-        <label for="name">Name of the project</label>
-        <input type="text" name="name" value="{{project.name}}" placeholder="Enter the name of your project"
-          class="input-control">
-        {{!--
-      </div> --}}
+      <label for="name">Name of the project</label>
+      <input type="text" name="name" value="{{project.name}}" placeholder="Enter the name of your project"
+        class="input-control">
+
 
       <label for="description">Description of the project</label>
 

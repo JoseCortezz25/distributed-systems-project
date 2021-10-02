@@ -50,6 +50,15 @@
   align-items: center;
 }
 
+.section-update-user {
+  background-color: var(--color-gray);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: scroll;
+  margin-bottom: 7rem;
+}
+
 
 .knowledge-list {
   width: 100%;

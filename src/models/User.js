@@ -33,11 +33,14 @@ const userSchema = new Schema({
     required: true,
     trim: true
   },
-  // skills: [String],
-  profile: {
-    type: Schema.Types.ObjectId,
-    ref: 'PhotoProfile'
-  },
+  // profile_image_id: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'PhotoProfile'
+  // },
+  // projects: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'Project'
+  // }],
   token: String,
   expiration: Date
 })
@@ -52,6 +55,23 @@ userSchema.pre('save', async function (next) {
     next(err)
   }
 })
+
+userSchema.post('save', function (err, doc, next) {
+  if (err.name === 'MongoServerError' && err.code === 11000) {
+    next('Username or email already exists')
+  } else {
+    next(err)
+  }
+})
+
+// Comparate password
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  try {
+    return await bcrypt.compare(candidatePassword, this.password)
+  } catch (err) {
+    throw new Error(err)
+  }
+}
 
 const User = model('User', userSchema)
 module.exports = User

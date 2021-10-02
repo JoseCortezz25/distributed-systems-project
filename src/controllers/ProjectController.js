@@ -98,7 +98,6 @@ class ProjectController {
   async updateProject(req, res) {
     let theImageExist;
     try {
-
       theImageExist = !req.file ? false : true
       const theProjectExist = await ProjectSchema.findOne({ url: req.params.url }).populate('image_project')
       if (!theProjectExist) res.redirect('/*')
