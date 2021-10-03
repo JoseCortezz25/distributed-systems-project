@@ -1,20 +1,24 @@
 <section class="container-single-project">
   <div class="section-single-project">
-    {{!-- <img src="https://via.placeholder.com/650" alt=""> --}}
-    {{!-- <img src="{{project.path}}" alt=""> --}}
     <img src="{{photo.imageURL}}" alt="">
   </div>
   <div class="section-single-project">
     <h1 class="title-section-project">{{project.name}}</h1>
+    {{#if project.user}}
+    <a class="owner-project" target="_blank" href="/user/{{project.user.username}}">
+      By {{project.user.fullname}}
+    </a>
+    {{/if}}
     <div class="description-project">{{{project.description}}}</div>
     <h3 class="subtitle-section-project">Technologies used in the project</h3>
     <ul class="header-tags">
       {{#each project.technologies}}
-        <li>{{this}}</li>
+      <li>{{this}}</li>
       {{/each}}
     </ul>
-
-    <a href="/project/update/{{project.url}}" class="btn-standard btn-edit">Edit project</a>
-    {{!-- <a href="/project/delete/{{project.url}}" class="btn-standard btn-delete">Delete project</a> --}}
+    {{#if (validUserToUpdateProject currentUser owner)}}
+      <a href="/project/update/{{project.url}}" class="btn-standard btn-edit">Edit project</a>
+      {{!-- <a href="/project/delete/{{project.url}}" class="btn-standard btn-delete">Delete project</a> --}}
+    {{/if}}
   </div>
 </section>

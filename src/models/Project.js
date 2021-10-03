@@ -26,10 +26,10 @@ const projectSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Photo',
   },
-  // user_id: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'User',
-  // }
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }
 })
 
 projectSchema.pre('save', function (next) {

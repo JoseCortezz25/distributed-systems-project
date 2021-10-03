@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
+const rug = require('random-username-generator')
 
 const userSchema = new Schema({
   fullname: {
@@ -9,9 +10,7 @@ const userSchema = new Schema({
   },
   username: {
     type: String,
-    required: true,
-    unique: true,
-    trim: true
+    lowercase: true,
   },
   password: {
     type: String,
@@ -37,21 +36,32 @@ const userSchema = new Schema({
   //   type: Schema.Types.ObjectId,
   //   ref: 'PhotoProfile'
   // },
-  // projects: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Project'
-  // }],
+  projects: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Project'
+  }],
   token: String,
   expiration: Date
 })
 
-
+// Encrypt password
 userSchema.pre('save', async function (next) {
   try {
     if (!this.isModified('password')) return next()
     this.password = await bcrypt.hash(this.password, 10)
     next()
-  }catch(err) {
+  } catch (err) {
+    next(err)
+  }
+})
+
+// Generate random username
+userSchema.pre('save', function (next) {
+  try {
+    rug.setSeperator('_');
+    this.username = rug.generate()
+    next()
+  } catch (err) {
     next(err)
   }
 })

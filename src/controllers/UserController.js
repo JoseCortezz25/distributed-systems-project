@@ -16,21 +16,22 @@ cloudinary.config({
 class UserController {
 
   /* 🍔 ---- Views ---- 🍔 */
-  /* 🍎 ----  Logic ---- 🍎 */
   async profile(req, res) {
     try {
       const { name } = req.params
-
       const user = await UserSchema.findOne({ username: name })
-
+      const projects = await ProjectSchema.find({ user: user._id }).populate('image_project')
       res.render('profile', {
         title: `${name} | ${TITLE_PAGE}`,
-        user
+        user,
+        projects
       })
     } catch (error) {
       throw new Error(error)
     }
   }
+  
+  /* 🍎 ----  Logic ---- 🍎 */
 
   async register(req, res) {
     const errors = req.validationErrors()
@@ -50,10 +51,6 @@ class UserController {
         res.redirect('/register')
       }
     }
-  }
-
-  async login(req, res) {
-    
   }
 
   async userUpdateView(req, res) {
@@ -136,7 +133,7 @@ class UserController {
   validateRegisters(req, res, next) {
     // sanitizer
     req.sanitizeBody('fullname').escape()
-    req.sanitizeBody('username').escape()
+    // req.sanitizeBody('username').escape()
     req.sanitizeBody('email').escape()
     req.sanitizeBody('password').escape()
     req.sanitizeBody('confirmpassword').escape()
@@ -145,7 +142,7 @@ class UserController {
 
     // Validate
     req.checkBody('fullname', 'Fullname is required').notEmpty()
-    req.checkBody('username', 'Username is required').notEmpty()
+    // req.checkBody('username', 'Username is required').notEmpty()
     req.checkBody('email', 'Email is not valid').isEmail()
     req.checkBody('email', 'Email is required').notEmpty()
     req.checkBody('password', 'Password is required').notEmpty()
@@ -155,8 +152,6 @@ class UserController {
     req.checkBody('profession', 'Profession is required').notEmpty()
 
     const errors = req.validationErrors()
-    console.log(colors.bgMagenta.black('errors', errors))
-    console.log(errors)
     if (errors) {
       req.flash('error', errors.map(err => err.msg))
       res.render('register', {

@@ -16,31 +16,36 @@ router.post('/login', AuthController.login)
 
 // 👉 User views
 router.get('/user/:name', UserController.profile)
-router.get('/user-update/:name', UserController.userUpdateView)
-router.post('/user-update/:name', UserController.userUpdate)
+router.get('/user-update/:name', isAuthenticated, UserController.userUpdateView)
+router.post('/user-update/:name', isAuthenticated, UserController.userUpdate)
 
 // 👉 Project views
-router.get('/project/add', ProjectController.formAddProjectView)
-router.post('/project/add', ProjectController.addProject)
+router.get('/project/add', isAuthenticated, ProjectController.formAddProjectView)
+router.post('/project/add', isAuthenticated, ProjectController.addProject)
 router.get('/project/:url', ProjectController.singleProjectView)
-router.get('/project/update/:url', ProjectController.formUpdateProjectView)
-router.post('/project/update/:url', ProjectController.updateProject)
-router.get('/project/delete/:url', ProjectController.deleteProjectByUrl)
+router.get('/project/update/:url', isAuthenticated, ProjectController.formUpdateProjectView)
+router.post('/project/update/:url', isAuthenticated, ProjectController.updateProject)
+router.get('/project/delete/:url', isAuthenticated, ProjectController.deleteProjectByUrl)
 // router.delete('/project/delete', UserController.addProject)
+
+router.get('/logout', (req, res, next) => {
+  console.log(res.locals.user);
+  req.logout()
+  res.redirect('/')
+})
 
 // Error View
 router.get('*', function(req, res){
   res.status(404).render('page-not-found', {
     title: '404',
     layout: 'SingleLayout.hbs'
-  });
+  })
 })
 
 function isAuthenticated(req, res, next) {
   if(req.isAuthenticated()) {
-    return next();
+    return next()
   }
-
   res.redirect('/')
 }
 

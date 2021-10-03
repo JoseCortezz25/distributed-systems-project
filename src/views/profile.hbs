@@ -4,31 +4,60 @@
 
     {{!-- <div class="profile-image"> --}}
       {{!-- {{#if user.profile_image_id}}
-        <img src="{{user.profile_image_id}}" alt="{{ user.name }}">
+      <img src="{{user.profile_image_id}}" alt="{{ user.name }}">
       {{else}} --}}
-        {{!-- <img src="/static/images/user-icon-default.jpg" alt="{{ user.name }}"> --}}
+      {{!-- <img src="/static/images/user-icon-default.jpg" alt="{{ user.name }}"> --}}
       {{!-- {{/if}} --}}
-    {{!-- </div> --}}
+      {{!--
+    </div> --}}
 
     <div class="profile-info">
       <h1 class="profile-name">{{user.fullname}}</h1>
       <p class="profile-profession">{{user.profession}}</p>
+      {{#if (validUserToUpdateProject currentUser user)}}
       <div class="profile-buttons">
         <a class="btn-standard btn-add" href="/project/add">Add new Project</a>
         <a class="btn-standard btn-add" href="/user-update/{{user.username}}">Edit my profile</a>
       </div>
-      <div class="profile-skills">
-        {{!-- {{#each user.skills}}
-          <p class="profile-skill">{{this}}</p>
-        {{/each}} --}}
-      </div>
-      {{!-- <p class="profile-description">{{user.description}}</p> --}}
+      {{/if}}
     </div>
-
   </div>
 
   <div class="section-profile-info">
     <h2 class="title-section-profile">Description</h2>
     <p class="profile-description">{{user.description}}</p>
+  </div>
+
+  <div class="section-profile-projects">
+    <h2 class="title-section-profile">My projects</h2>
+    {{#if projects}}
+    <masonry-layout cols="3" gap="20">
+      {{#each projects}}
+        <a class="link-card-project" href="/project/{{url}}">
+          <div class="card-project">
+
+            <div class="card-project-image">
+              <img src={{image_project.imageURL}} alt="">
+            </div>
+
+            <div class="card-project-body">
+              <div class="card-project-body__header">
+                <ul class="header__technologies">
+                  {{#each technologies}}
+                  <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+                <div class="header-title">{{name}}</div>
+              </div>
+            </div>
+          </div>
+        </a>
+      {{/each}}
+    </masonry-layout>
+    {{else}}
+    <div class="message-not-project">
+      <p>😕 You don't have any project yet</p>
+    </div>
+    {{/if}}
   </div>
 </section>

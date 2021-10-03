@@ -19,13 +19,16 @@ class ProjectController {
   /* Render single project view */
   async singleProjectView (req, res) {
     try {
-      const project = await ProjectSchema.findOne({ url: req.params.url })
+      const project = await ProjectSchema.findOne({ url: req.params.url }).populate('user')
       if (!project) res.redirect('/*')
       const photo = await PhotoSchema.findOne({ _id: project.image_project })
+      const userIdFromProject = project.user._id
+      const user = await User.findOne({ _id: userIdFromProject })
       res.render('single-project', {
         title: `${project.name} | ${TITLE_PAGE}`,
         project,
-        photo
+        photo,
+        owner: user
       })
     } catch (error) {
       console.log(error)
@@ -61,12 +64,14 @@ class ProjectController {
   async addProject(req, res) {
     const { filename, path, size, mimetype, originalname } = req.file
     try {
+      console.log(colors.bgCyan(`Creating project ${req.body.name} with the user: ${res.locals.currentUser.fullname}`))
       const result = await cloudinary.v2.uploader.upload(path)
       await fs.unlink(path)
       const { name, description, technologies } = req.body
       const project = new ProjectSchema({
         name,
-        description
+        description,
+        user: res.locals.currentUser._id
       })
       project.technologies = technologies.split(',')
       const newProject = await project.save()
@@ -80,7 +85,7 @@ class ProjectController {
       })
 
       const newPhoto = await photo.save();
-      await ProjectSchema.findOneAndUpdate(
+      const newProjectWithPhoto = await ProjectSchema.findOneAndUpdate(
         { url: newProject.url },
         { image_project: newPhoto._id },
         {
@@ -88,6 +93,11 @@ class ProjectController {
           runValidators: true
         }
       )
+      console.log(colors.bgGreen.black(` ---> add the user`))
+      const user = await User.findOne({ _id: res.locals.currentUser._id })
+      user.projects = user.projects.concat(newProjectWithPhoto)
+      await user.save()
+      console.log(colors.bgGreen.black(`user added SIUUU`))
       res.redirect(`/project/${newProject.url}`)
     } catch (error) {
       res.status(500).send(error)
@@ -156,7 +166,7 @@ class ProjectController {
     }
   }
 
-  /* Method for deleting a project by ID */
+  /* Method for deleting a project by ID - not working xd*/
   async deleteProjectByUrl(req, res) {
     try {
       console.log(colors.bgCyan(`Deleting project ${req.params.url}`))

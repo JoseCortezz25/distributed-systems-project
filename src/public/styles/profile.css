@@ -93,6 +93,23 @@
   margin: auto;
   padding-top: 3.4rem;
   padding-bottom: 2rem;
+  margin-bottom: 2rem;
   border-top: 2px solid var(--color-gray);
   border-bottom: 2px solid var(--color-gray);
+}
+
+.section-profile-projects {
+  width: 80%;
+  margin-top: 3rem;
+  margin: auto;
+  padding-bottom: 3.4rem;
+  /* border: 1px solid red; */
+}
+
+.message-not-project {
+  width: 100%;
+  font-style: italic;
+  padding: 15px 10px;
+  display: flex;
+  justify-content: center;
 }

@@ -1,5 +1,9 @@
 <div class="container-feed">
     <div class="feed-general">
+        <div class="feed-general__message">
+            <p>Bienvenido, {{currentUser.fullname}}</p>
+        </div>
+        {{#if projects}}
         <masonry-layout cols="3" gap="20">
             {{#each projects}}
             <a class="link-card-project" href="/project/{{url}}">
@@ -18,10 +22,18 @@
                             </ul>
                             <div class="header-title">{{name}}</div>
                         </div>
+                        <div class="card-project-body__owner">
+                            <p>By {{user.fullname}}</p>
+                        </div>
                     </div>
                 </div>
             </a>
             {{/each}}
         </masonry-layout>
+        {{else}}
+        <div class="message-not-project">
+            <p>😕 There are no projects to show</p>
+        </div>
+        {{/if}}
     </div>
 </div>

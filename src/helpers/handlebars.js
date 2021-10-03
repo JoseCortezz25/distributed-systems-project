@@ -1,19 +1,15 @@
 module.exports = {
-
   seleccionarSkills: (selected = [], opciones) => {
     const skills = ['Html5', 'Css3', 'Python', 'Java', 'Javascript',
       'Jquery', 'Laravel', 'R', 'Apollo', 'Graphql', 'Typescript',
       'Mongoose', 'Sequelize', 'SQL', 'MVC', 'WordPress', 'Angular',
       'Node', 'Express', 'Php'
-    ];
-
-    let html = '';
-
+    ]
+    let html = ''
     skills.forEach(skill => {
-      html+=`<li ${selected.includes(skill) ? 'class="active"':''}>${skill}</li>`;
-    });
-
-    return opciones.fn().html = html;
+      html+=`<li ${selected.includes(skill) ? 'class="active"':''}>${skill}</li>`
+    })
+    return opciones.fn().html = html
   },
 
   selectTechnologies: (selected = [], options) => {
@@ -21,29 +17,27 @@ module.exports = {
       'Jquery', 'Laravel', 'R', 'Apollo', 'Graphql', 'TypeScript',
       'Mongoose', 'Sequelize', 'SQL', 'MVC', 'WordPress', 'Angular',
       'Node', 'Express', 'Php', 'Postgres', 'MySQL', 'React', 'Svelte'
-    ];
-
-    let html = '';
-
+    ]
+    let html = ''
     technologies.forEach(technology => {
-      html+=`<li ${selected.includes(technology) ? 'class="active"':''}>${technology}</li>`;
-    });
-
-    return options.fn().html = html;
+      html+=`<li ${selected.includes(technology) ? 'class="active"':''}>${technology}</li>`
+    })
+    return options.fn().html = html
   },
 
   showAlerts: (errors = {}, alerts) => {
-    // console.log(errors)
     const category = Object.keys(errors)
-    // console.log(category)
     let html = ''
     if(category.length){
       errors[category].forEach(error => {
         html+=`<div class="${category} alerta">${error}</div>`
-        // html+=`<div class="${category} alert alert-danger">${error}</div>`
       })
     }
-    return alerts.fn().html = html;
+    return alerts.fn().html = html
+  },
+
+  validUserToUpdateProject: (loggedUser, projectOwner) => {
+    if (!loggedUser) return false
+    return loggedUser._id.toString() === projectOwner._id.toString()
   }
 }
-

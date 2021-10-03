@@ -57,12 +57,11 @@ class HomeController {
   /* Render the feed page view */
   async feedView (req, res) {
     try {
-      const projects = await projectSchema.find().populate('image_project')
-      // console.log(projects)
+      const projects = await projectSchema.find().populate('image_project').populate('user')
       res.render('feed', {
         title: `Feed | ${TITLE_PAGE}`,
         titleProject,
-        projects: projects
+        projects
       })
     } catch (error) {
       res.status(500).send(error)
