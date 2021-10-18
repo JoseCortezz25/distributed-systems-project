@@ -38,31 +38,31 @@ class AuthController {
     }
 
     // Login a user
-    async loginUser(req, res) {
-        try {
-            const { email, password } = req.body;
+    // async loginUser(req, res) {
+    //     try {
+    //         const { email, password } = req.body;
 
-            if (!helpers.isEmail(email)) {
-                return response.error(req, res, 'Email is invalid', 400)
-            }
+    //         if (!helpers.isEmail(email)) {
+    //             return response.error(req, res, 'Email is invalid', 400)
+    //         }
 
-            const user = await UserSchema.findOne({ email: email })
-            if (!user) {
-                return response.error(req, res, 'User not found', 404)
-            }
+    //         const user = await UserSchema.findOne({ email: email })
+    //         if (!user) {
+    //             return response.error(req, res, 'User not found', 404)
+    //         }
 
-            const isPasswordValid = await bcrypt.compare(password, user.password)
-            if (!isPasswordValid) {
-                return response.error(req, res, 'Password is not valid', 400)
-            }
+    //         const isPasswordValid = await bcrypt.compare(password, user.password)
+    //         if (!isPasswordValid) {
+    //             return response.error(req, res, 'Password is not valid', 400)
+    //         }
 
-            const token = await auth.sign({...user })
-            response.success(req, res, token, 200)
-        } catch (error) {
-            console.log(error)
-            response.error(req, res, error.message, 500)
-        }
-    }
+    //         const token = await auth.sign({...user })
+    //         response.success(req, res, token, 200)
+    //     } catch (error) {
+    //         console.log(error)
+    //         response.error(req, res, error.message, 500)
+    //     }
+    // }
 
 
     validateRegisters(req, res) {

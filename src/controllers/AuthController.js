@@ -17,12 +17,12 @@ class AuthController {
     res.redirect('/')
   }
 
-  // async register (req, res) {
-  //   const { username, password } = req.body
-  //   const user = new mongoose.models.User({ username, password })
-  //   await user.save()
-  //   res.redirect('/login')
-  // }
+  isAuthenticated(req, res, next) {
+    if(req.isAuthenticated()) {
+      return next()
+    }
+    res.redirect('/login')
+  }
 }
 
 const authController = new AuthController()

@@ -2,14 +2,13 @@
 
   <div class="section-profile">
 
-    {{!-- <div class="profile-image"> --}}
-      {{!-- {{#if user.profile_image_id}}
-      <img src="{{user.profile_image_id}}" alt="{{ user.name }}">
-      {{else}} --}}
-      {{!-- <img src="/static/images/user-icon-default.jpg" alt="{{ user.name }}"> --}}
-      {{!-- {{/if}} --}}
-      {{!--
-    </div> --}}
+    <div class="profile-image">
+      {{#if user.profile_image}}
+      <img src="{{user.profile_image.imageURL}}" alt="{{ user.name }}">
+      {{else}}
+      <img src="/static/images/user-icon-default.jpg" alt="{{ user.name }}">
+      {{/if}}
+    </div>
 
     <div class="profile-info">
       <h1 class="profile-name">{{user.fullname}}</h1>

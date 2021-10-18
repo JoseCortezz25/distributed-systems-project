@@ -3,7 +3,8 @@ const { contantsView: { titlePage }, cloudinary: { cloud_name, api_key, api_secr
 const ProjectSchema = require('../models/Project')
 const colors = require('colors')
 const PhotoSchema = require('../models/Photo')
-const UserSchema  = require('../models/User')
+const PhotoProfileSchema = require('../models/PhotoProfile')
+const UserSchema = require('../models/User')
 const response = require('../lib/response')
 const fs = require('fs-extra')
 const TITLE_PAGE = titlePage
@@ -19,8 +20,9 @@ class UserController {
   async profile(req, res) {
     try {
       const { name } = req.params
-      const user = await UserSchema.findOne({ username: name })
+      const user = await UserSchema.findOne({ username: name }).populate('profile_image')
       const projects = await ProjectSchema.find({ user: user._id }).populate('image_project')
+      console.log(user)
       res.render('profile', {
         title: `${name} | ${TITLE_PAGE}`,
         user,
@@ -30,7 +32,21 @@ class UserController {
       throw new Error(error)
     }
   }
-  
+
+  async userUpdateView(req, res) {
+    try {
+      const { name } = req.params
+      const user = await UserSchema.findOne({ username: name })
+      res.render('update-user', {
+        title: `Updating ${user.username} | ${TITLE_PAGE}`,
+        user
+      })
+    } catch (error) {
+      res.redirect('/*')
+    }
+  }
+
+
   /* 🍎 ----  Logic ---- 🍎 */
 
   async register(req, res) {
@@ -53,82 +69,67 @@ class UserController {
     }
   }
 
-  async userUpdateView(req, res) {
-    try {
-      const { name } = req.params
-      const user = await UserSchema.findOne({ username: name })
-      res.render('update-user', {
-        title: `Updating ${user.username} | ${TITLE_PAGE}`,
-        user
-      })
-    } catch (error) {
-      res.redirect('/*')
-    }
-  }
-
   async userUpdate(req, res) {
     try {
       const { name } = req.params
-      console.log('username', name);
       const theUserExist = await UserSchema.findOne({ username: name })
-      if (!theUserExist) res.redirect('/*')      
+      if (!theUserExist) res.redirect('/*')
       req.body.username = name
-      // if (req.file) {
-      //   console.log(colors.bgCyan.black('Uploading image...'))
-      //   const { filename, path, size, mimetype, originalname } = req.file
-      //   const result = await cloudinary.v2.uploader.upload(path)
-      //   await fs.unlink(path)
-      //   const profilePicture = await PhotoSchema.findOneAndUpdate({
-      //     _id: theUserExist.profile_image_id
-      //   },
-      //   {
-      //     filename,
-      //     originalname,
-      //     mimetype,
-      //     size,
-      //     imageURL: result.url,
-      //     public_id: result.public_id
-      //   },
-      //   {
-      //     new: true,
-      //     runValidators: true
-      //   })
-      //   req.body.profile_image_id = profilePicture._id
-      //   await UserSchema.findOneAndUpdate(
-      //     {
-      //       username: req.params.name
-      //     },
-      //     req.body,
-      //     {
-      //       new: true,
-      //       runValidators: true
-      //     }
-      //     )
-      //     return res.redirect(`/user/${theUserExist.username}`)
-      //   } 
-        
-      // if(!req.file){
-        console.log(req.body);
-        // console.log(colors.bgCyan.black('There isnt image...'))
-        await UserSchema.findOneAndUpdate(
-            {
-              username: name
-            },
-            req.body,
-            {
-              new: true,
-              runValidators: true
-            }
-          )
-        return res.redirect(`/user/${theUserExist.username}`)
-      // }
 
+      if (req.file) {
+        const { filename, path, size, mimetype, originalname } = req.file
+        const resultImageUpload = await cloudinary.v2.uploader.upload(path)
+        await fs.unlink(path)
+        const profilePicture = await PhotoProfileSchema.create({
+          filename,
+          originalname,
+          mimetype,
+          size,
+          imageURL: resultImageUpload.url,
+          public_id: resultImageUpload.public_id
+        })
+        req.body.profile_image = profilePicture._id
+      }
+      await UserSchema.findOneAndUpdate(
+        {
+          username: name
+        },
+        req.body,
+        {
+          new: true,
+          runValidators: true
+        }
+      )
+      return res.redirect(`/user/${theUserExist.username}`)
     } catch (error) {
       console.log(error)
       req.flash('error', error)
       res.redirect('/*')
     }
   }
+
+  async uploadImage(image) {
+    if (!image) return false
+    try {
+      console.log(colors.bgCyan.black('Uploading image...'))
+      const { filename, path, size, mimetype, originalname } = image
+      const resultImageUpload = await cloudinary.v2.uploader.upload(path)
+      await fs.unlink(path)
+      const profilePicture = await PhotoSchema.create({
+        filename,
+        originalname,
+        mimetype,
+        size,
+        imageURL: resultImageUpload.url,
+        public_id: resultImageUpload.public_id
+      })
+      return profilePicture
+    } catch (error) {
+      console.log(error)
+      return false
+    }
+  }
+
 
   validateRegisters(req, res, next) {
     // sanitizer
@@ -157,6 +158,37 @@ class UserController {
       res.render('register', {
         title: 'Register | ' + TITLE_PAGE,
         layout: 'SingleLayout.hbs',
+        body: req.body,
+        messages: req.flash()
+      })
+      return
+    }
+    next()
+  }
+
+  async validateUpdateUser (req, res ,next) {
+    // sanitizer
+    req.sanitizeBody('fullname').escape()
+    req.sanitizeBody('email').escape()
+    req.sanitizeBody('description').escape()
+    req.sanitizeBody('profession').escape()
+
+    // Validate
+    req.checkBody('fullname', 'Fullname is required').notEmpty()
+    req.checkBody('email', 'Email is not valid').isEmail()
+    req.checkBody('email', 'Email is required').notEmpty()
+    req.checkBody('description', 'Description is required').notEmpty()
+    req.checkBody('profession', 'Profession is required').notEmpty()
+
+    const errors = req.validationErrors()
+    if (errors) {
+      req.flash('error', errors.map(err => err.msg))
+      const { name } = req.params
+      const user = await UserSchema.findOne({ username: name })
+      res.render('update-user', {
+        title: `Updating ${user.username} | ${TITLE_PAGE}`,
+        layout: 'SingleLayout.hbs',
+        user,
         body: req.body,
         messages: req.flash()
       })

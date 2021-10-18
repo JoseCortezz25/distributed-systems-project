@@ -64,7 +64,6 @@ class ProjectController {
   async addProject(req, res) {
     const { filename, path, size, mimetype, originalname } = req.file
     try {
-      console.log(colors.bgCyan(`Creating project ${req.body.name} with the user: ${res.locals.currentUser.fullname}`))
       const result = await cloudinary.v2.uploader.upload(path)
       await fs.unlink(path)
       const { name, description, technologies } = req.body
@@ -93,11 +92,9 @@ class ProjectController {
           runValidators: true
         }
       )
-      console.log(colors.bgGreen.black(` ---> add the user`))
       const user = await User.findOne({ _id: res.locals.currentUser._id })
       user.projects = user.projects.concat(newProjectWithPhoto)
       await user.save()
-      console.log(colors.bgGreen.black(`user added SIUUU`))
       res.redirect(`/project/${newProject.url}`)
     } catch (error) {
       res.status(500).send(error)
@@ -166,17 +163,15 @@ class ProjectController {
     }
   }
 
-  /* Method for deleting a project by ID - not working xd*/
-  async deleteProjectByUrl(req, res) {
+  /* Method for deleting a project by ID */
+  async deleteProjectById(req, res) {
     try {
-      console.log(colors.bgCyan(`Deleting project ${req.params.url}`))
-      const project = await ProjectSchema.findOne({ url: req.params.url }).populate('image_project')
-      if (!project) res.redirect('/*')
-      const { image_project: { public_id }, } = project
-      await cloudinary.v2.uploader.destroy(public_id)
-      await PhotoSchema.findOneAndRemove({ url: image_project.url })
-      await ProjectSchema.findOneAndRemove({ url: req.params.url })
-      console.log(colors.bgCyan(`Project ${req.params.url} deleted :)`).black);
+      const project = await ProjectSchema.findOne({ _id: req.params.id }).populate('image_project')
+      const idPhoto = project.image_project._id
+      const idPublicPhoto = project.image_project.public_id
+      await cloudinary.v2.uploader.destroy(idPublicPhoto)
+      await PhotoSchema.findOneAndRemove({ _id: idPhoto })
+      await ProjectSchema.findOneAndRemove({ _id: req.params.id })
       res.redirect('/feed')
     } catch (error) {
       res.status(500).send(error)

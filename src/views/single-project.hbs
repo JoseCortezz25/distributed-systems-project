@@ -18,7 +18,7 @@
     </ul>
     {{#if (validUserToUpdateProject currentUser owner)}}
       <a href="/project/update/{{project.url}}" class="btn-standard btn-edit">Edit project</a>
-      {{!-- <a href="/project/delete/{{project.url}}" class="btn-standard btn-delete">Delete project</a> --}}
+      <a href="/project/delete/{{project._id}}" class="btn-standard btn-delete">Delete project</a>
     {{/if}}
   </div>
 </section>

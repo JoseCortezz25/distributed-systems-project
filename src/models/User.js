@@ -32,10 +32,10 @@ const userSchema = new Schema({
     required: true,
     trim: true
   },
-  // profile_image_id: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'PhotoProfile'
-  // },
+  profile_image: {
+    type: Schema.Types.ObjectId,
+    ref: 'PhotoProfile'
+  },
   projects: [{
     type: Schema.Types.ObjectId,
     ref: 'Project'

@@ -80,9 +80,9 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Routing
+app.use('/api', require('./components/user/user.routes'))
 app.use('/api', require('./components/project/project.routes'))
 app.use('/api', require('./components/auth/auth.routes'))
-// app.use('/api', require('./components/user/user.routes'))
 app.use(require('./routes/routes'))
 
 require('./lib/database')

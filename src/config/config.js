@@ -10,6 +10,7 @@ const config = {
   dbHost: process.env.DB_HOST,
   dbName: process.env.DB_NAME,
   secret: process.env.SECRET,
+  key_secret: process.env.KEY_SECRET,
   key: process.env.KEY,
   mongoUrl: `mongodb+srv://${encodeURIComponent(process.env.DB_USER)}:${encodeURIComponent(process.env.DB_PASSWORD)}@clusterdistributedsyste.unokf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
 

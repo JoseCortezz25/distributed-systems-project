@@ -1,0 +1,82 @@
+{ fullname: "Iratxe Diallo", address: "Calle 1", email: "iratxe@correo.com", phonenumber: "12345678", course: "Curso de Economía Digital: Bitcoin y Criptomonedas"}
+
+{ fullname: "Pelayo Pedraza", address: "Calle 56", email: "pelayo@correo.com", phonenumber: "12345678", course: "Audiocurso de Historia de Bitcoin y Criptomonedas" }
+
+{ fullname: "Lazaro Alvaro", address: "Calle 47", email: "lazaro@correo.com", phonenumber: "87654321", course: "Audiocurso de Historia de Ethereum y Smart Contracts" }
+
+{ fullname: "Maite del Campo", address: "Calle 6", email: "maite@correo.com", phonenumber: "86421357", course: "Curso de Bitcoin y Blockchain" }
+
+{ fullname: "Iñaki Aroca", address: "Calle 1", email: "aroca@correo.com", phonenumber: "12457863", course: "Curso de Creación de NFTs"}
+
+
+-----------------------------------------------------------------  students -------------------------------------------------------------------
+
+db.students.insertOne({ fullname: "Socorro Avila", points: 12345, city: "Bogota", email: "socorro@correo.com", phonenumber: "609275430", course: "Curso de Economía Digital: Bitcoin y Criptomonedas"})
+
+db.students.insertOne({ fullname: "Sabina Duarte", points: 87954, city: "Cali", email: "sabina@correo.com", phonenumber: "628041153", course: "Curso de Creación de NFTs" })
+
+db.students.insertOne({ fullname: "Fermina Montes", points: 58742, city: "Cali", email: "fermina@correo.com", phonenumber: "624756183", course: "Audiocurso de Historia de Ethereum y Smart Contracts" })
+
+db.students.insertOne({ fullname: "John Requena", points: 95123, city: "Neiva", email: "requena@correo.com", phonenumber: "695349109", course: "Curso de Bitcoin y Blockchain" })
+
+db.students.insertOne({ fullname: "Josep Vallejo", points: 25761, city: "Medellin", email: "josep@correo.com", phonenumber: "747384592", course: "Curso de Creación de NFTs"})
+
+
+db.students.find({{points: {$gte: 50000}}, {city: "Cali"}}).pretty()
+db.students.find({points: {$gte: 80000}, city: "Neiva"}).pretty()
+
+--------------------------------------------------------  Companies  ----------------------------------------------------------------------------
+
+{ name: "Biloxi Coins", plan: "Expert", employees: "345", phonenumber: "706581876"}
+
+{ name: "Hush Now Coin", plan: "Basic", employees: "12", phonenumber: "600267669"}
+
+{ name: "The Largest Block", plan: "Expert Plus", employees: "351", phonenumber: "742989495"}
+
+{ name: "Jdoba Hand", plan: "Expert Plus", employees: "124", phonenumber: "609164311"}
+
+{ name: "Scrypto Mint", plan: "Expert", employees: "192", phonenumber: "742650816"}
+
+db.companies.update( { name: "Biloxi Coins" }, { $set: { plan: "Expert Plus" }} ) 
+
+db.products.update({ name: "Biloxi Coins" }, { $set: { plan: "Expert Plus" }})
+--------------------------------------------------------  Courses  ----------------------------------------------------------------------------
+
+{ name: "Curso de Economía Digital: Bitcoin y Criptomonedas", type: "Facil", duration: "5 horas", school: "Escuela de Blockchain y Criptomonedas"}
+
+{ name: "Audiocurso de Historia de Bitcoin y Criptomonedas", type: "Facil", duration: "7 horas", school: "Escuela de Blockchain y Criptomonedas"}
+
+{ name: "Audiocurso de Historia de Ethereum y Smart Contracts", type: "Intermedio", duration: "3 horas", school: "Escuela de Blockchain y Criptomonedas"}
+
+{ name: "Curso de Bitcoin y Blockchain", type: "Dificil", duration: "6 horas", school: "Escuela de Blockchain y Criptomonedas"}
+
+{ name: "Curso de Creación de NFTs", type: "Dificil", duration: "3 horas", school: "Escuela de Blockchain y Criptomonedas"}
+
+db.courses.insertOne({ name: "Curso de Economía Digital: Bitcoin y Criptomonedas", type: "Facil", duration: "5 horas", school: "Escuela de Blockchain y Criptomonedas"})
+db.courses.insertOne({ name: "Audiocurso de Historia de Bitcoin y Criptomonedas", type: "Facil", duration: "7 horas", school: "Escuela de Blockchain y Criptomonedas"})
+db.courses.insertOne({ name: "Audiocurso de Historia de Ethereum y Smart Contracts", type: "Intermedio", duration: "3 horas", school: "Escuela de Blockchain y Criptomonedas"})
+db.courses.insertOne({ name: "Curso de Bitcoin y Blockchain", type: "Dificil", duration: "6 horas", school: "Escuela de Blockchain y Criptomonedas"})
+db.courses.insertOne({ name: "Curso de Creación de NFTs", type: "Dificil", duration: "3 horas", school: "Escuela de Blockchain y Criptomonedas"})
+
+--------------------------------------------------------  NewCourses  ----------------------------------------------------------------------------
+
+{ name: "Curso de Estrategias para Aprender en Línea Efectivamente", type: "Facil", duration: "2 horas", school: "Escuela de Habilidades Blandas"}
+
+{ name: "Curso de Gestión Efectiva del Tiempo", type: "Facil", duration: "2 horas", school: "Escuela de Habilidades Blandas"}
+
+{ name: "Curso para Crear Hábitos Positivos", type: "Medio", duration: "9 horas", school: "Escuela de Habilidades Blandas"}
+
+{ name: "Curso para Crear Hábitos Positivos", type: "Dificil", duration: "8 horas", school: "Escuela de Habilidades Blandas"}
+
+{ name: "Curso de Estrategias para la Productividad y la Organización", type: "Dificil", duration: "11 horas", school: "Escuela de Habilidades Blandas"}
+
+db.newcourses.insertOne({ name: "Curso de Estrategias para Aprender en Línea Efectivamente", type: "Facil", duration: "2 horas", school: "Escuela de Habilidades Blandas"})
+db.newcourses.insertOne({ name: "Curso de Gestión Efectiva del Tiempo", type: "Facil", duration: "2 horas", school: "Escuela de Habilidades Blandas"})
+db.newcourses.insertOne({ name: "Curso para Crear Hábitos Positivos", type: "Medio", duration: "9 horas", school: "Escuela de Habilidades Blandas"})
+db.newcourses.insertOne({ name: "Curso de Técnicas Efectivas de Estudio", type: "Dificil", duration: "8 horas", school: "Escuela de Habilidades Blandas"})
+db.newcourses.insertOne({ name: "Curso de Estrategias para la Productividad y la Organización", type: "Dificil", duration: "11 horas", school: "Escuela de Habilidades Blandas"})
+
+
+db.newcourses.removeOne({ name: "Curso de Estrategias para Aprender en Línea Efectivamente"})
+
+db.newcourses.deleteMany({})
