@@ -59,8 +59,10 @@ class ProjectController {
 
   async getProjectByUrl(req, res) {
     try {
-      const project = await ProjectSchema.findOne({ url: req.params.url }).populate('image_project').populate('user')
+      const project = await ProjectSchema.findOne({ url: req.params.url }).populate('image_project')
+      const user = await UserSchema.findOne({ _id: project.user }).populate('profile_image')
       if (!project) return response.error(req, res, 'Project not found', 404)
+      project.user = user
       return response.success(req, res, project, 200)
     } catch (error) {
       response.error(req, res, error, 500)
@@ -194,6 +196,22 @@ class ProjectController {
       }
     } catch (error) {
       response.error(req, res, 'A problema has ocurred with creation', 201)
+    }
+  }
+
+  async deleteProject(req, res) {
+    try {      
+      const project = await ProjectSchema.findOne({ _id: req.params.id }).populate('image_project')
+      if (!project) return response.error(req, res, 'Project not found', 404)
+      const idPhoto = project.image_project._id
+      const idPublicPhoto = project.image_project.public_id
+      await cloudinary.v2.uploader.destroy(idPublicPhoto)
+      await PhotoSchema.findOneAndRemove({ _id: idPhoto })
+      await ProjectSchema.findOneAndRemove({ _id: req.params.id })
+      
+      return response.success(req, res, 'Project deleted', 200)
+    } catch (error) {
+      response.error(req, res, error, 500)
     }
   }
 }
