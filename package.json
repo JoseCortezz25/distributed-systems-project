@@ -36,13 +36,13 @@
     "passport-local": "^1.0.0",
     "random-username-generator": "^1.0.4",
     "shortid": "^2.2.16",
-    "slug": "^5.1.0"
+    "slug": "^5.1.0",
+    "nodemon": "^2.0.12"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
     "babel-loader": "^8.2.2",
-    "nodemon": "^2.0.12",
     "standard": "^16.0.3",
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0"
