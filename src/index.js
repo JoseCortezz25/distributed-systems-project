@@ -42,9 +42,6 @@ app.use(express.urlencoded({ extended: true }))
 const storage = multer.diskStorage({
   destination: path.join(__dirname, 'public/uploads'),
   filename: (req, file, cb) => {
-    console.group('UPLOAD IMAGE NOW')
-    console.log(file)
-    console.groupEnd()
     cb(null, new Date().getTime() + path.extname(file.originalname))
   }
 })

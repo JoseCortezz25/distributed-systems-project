@@ -7,7 +7,7 @@ module.exports = {
     ]
     let html = ''
     skills.forEach(skill => {
-      html+=`<li ${selected.includes(skill) ? 'class="active"':''}>${skill}</li>`
+      html += `<li ${selected.includes(skill) ? 'class="active"' : ''}>${skill}</li>`
     })
     return opciones.fn().html = html
   },
@@ -20,18 +20,22 @@ module.exports = {
     ]
     let html = ''
     technologies.forEach(technology => {
-      html+=`<li ${selected.includes(technology) ? 'class="active"':''}>${technology}</li>`
+      html += `<li ${selected.includes(technology) ? 'class="active"' : ''}>${technology}</li>`
     })
     return options.fn().html = html
   },
 
   showAlerts: (errors = {}, alerts) => {
     const category = Object.keys(errors)
+    console.log(category);
     let html = ''
-    if(category.length){
-      errors[category].forEach(error => {
-        html+=`<div class="${category} alerta">${error}</div>`
-      })
+
+    if (!(category.includes('correcto'))) {
+      if (category.length) {
+        errors[category].forEach(error => {
+          html += `<div class="${category} alerta">${error}</div>`
+        })
+      }
     }
     return alerts.fn().html = html
   },
