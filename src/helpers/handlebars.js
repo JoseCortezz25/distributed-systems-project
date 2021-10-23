@@ -27,11 +27,9 @@ module.exports = {
 
   showAlerts: (errors = {}, alerts) => {
     const category = Object.keys(errors)
-    // console.log("errors", errors);
-    // console.log("category", category);
     let html = ''
-
-    if (!(category[1])) {
+    const errorsExists = category[1] ? true : false
+    if (errorsExists) {
       if (category.length) {
         errors[category].forEach(error => {
           html += `<div class="${category} alerta">${error}</div>`
