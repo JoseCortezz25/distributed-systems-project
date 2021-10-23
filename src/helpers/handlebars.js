@@ -27,10 +27,11 @@ module.exports = {
 
   showAlerts: (errors = {}, alerts) => {
     const category = Object.keys(errors)
-    console.log(category);
+    // console.log("errors", errors);
+    // console.log("category", category);
     let html = ''
 
-    if (!(category.includes('correcto'))) {
+    if (!(category[1])) {
       if (category.length) {
         errors[category].forEach(error => {
           html += `<div class="${category} alerta">${error}</div>`
