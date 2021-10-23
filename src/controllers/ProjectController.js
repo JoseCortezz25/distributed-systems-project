@@ -22,8 +22,10 @@ class ProjectController {
       const project = await ProjectSchema.findOne({ url: req.params.url }).populate('user')
       if (!project) res.redirect('/*')
       const photo = await PhotoSchema.findOne({ _id: project.image_project })
+      
       const userIdFromProject = project.user._id
-      const user = await User.findOne({ _id: userIdFromProject })
+      const user = await User.findOne({ _id: userIdFromProject }).populate('profile_image')
+      console.log(user);
       res.render('single-project', {
         title: `${project.name} | ${TITLE_PAGE}`,
         project,
@@ -32,7 +34,7 @@ class ProjectController {
       })
     } catch (error) {
       console.log(error)
-      res.status(500).send(error)
+      res.redirect('/*')
     }
   }
   
@@ -47,7 +49,7 @@ class ProjectController {
       })
     } catch (error) {
       console.log(error)
-      res.status(500).send(error)
+      res.redirect('/*')
     }
   }
 
@@ -97,7 +99,7 @@ class ProjectController {
       await user.save()
       res.redirect(`/project/${newProject.url}`)
     } catch (error) {
-      res.status(500).send(error)
+      res.redirect('/*')
     }
   }
 
@@ -159,7 +161,7 @@ class ProjectController {
       }
     } catch (error) {
       console.log(error)
-      res.status(500).send(error)
+      res.redirect('/*')
     }
   }
 
@@ -174,7 +176,7 @@ class ProjectController {
       await ProjectSchema.findOneAndRemove({ _id: req.params.id })
       res.redirect('/feed')
     } catch (error) {
-      res.status(500).send(error)
+      res.redirect('/*')
     }
   }
 

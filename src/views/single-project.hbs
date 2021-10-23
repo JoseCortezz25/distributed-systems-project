@@ -5,8 +5,11 @@
   <div class="section-single-project">
     <h1 class="title-section-project">{{project.name}}</h1>
     {{#if project.user}}
-    <a class="owner-project" target="_blank" href="/user/{{project.user.username}}">
-      By {{project.user.fullname}}
+    <a class="section-owner" target="_blank" href="/user/{{project.user.username}}">
+      <div class="box-user-profile">
+        <img src={{owner.profile_image.imageURL}} alt="">
+      </div>
+      <span>{{project.user.fullname}}</span>
     </a>
     {{/if}}
     <div class="description-project">{{{project.description}}}</div>

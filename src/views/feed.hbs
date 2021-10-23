@@ -22,9 +22,11 @@
                             </ul>
                             <div class="header-title">{{name}}</div>
                         </div>
+                        {{#if user}}
                         <div class="card-project-body__owner">
                             <p>By {{user.fullname}}</p>
                         </div>
+                        {{/if}}
                     </div>
                 </div>
             </a>

@@ -124,3 +124,31 @@ body {
   color: var(--color-white);
   box-shadow: -3px -3px 0px 0px var(--color-black-theme1);
 }
+
+.section-owner {
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.section-owner span {
+  margin-left: 1.2rem;
+  font-weight: 500;
+  color: var(--color-black)
+}
+
+.box-user-profile {
+  width: 30px;
+  height: 30px;
+}
+
+.box-user-profile img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+
