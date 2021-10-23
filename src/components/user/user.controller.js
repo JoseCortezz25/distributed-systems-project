@@ -73,7 +73,7 @@ class UserController {
         token,
       }, 201)
     } catch (error) {
-      response.error(req, res, error.message, 500)
+      response.error(req, res, error, 401)
     }
   }
 
