@@ -49,28 +49,32 @@ class UserController {
   }
 
   async login(req, res) {
-    const { email, password } = req.body
-    const user = await UserSchema.findOne({ email })
+    try {
+      const { email, password } = req.body
+      const user = await UserSchema.findOne({ email })
 
-    const passwordCorrect = user === null
-      ? false
-      : await bcrypt.compare(password, user.password)
-    if (!(user && passwordCorrect)) return response.error(req, res, 'Password incorrect or user was not found', 401)
+      const passwordCorrect = user === null
+        ? false
+        : await bcrypt.compare(password, user.password)
+      if (!(user && passwordCorrect)) return response.error(req, res, 'Password incorrect or user was not found', 401)
 
-    const userForToken = {
-      id: user._id,
-      username: user.username,
-      name: user.name,
+      const userForToken = {
+        id: user._id,
+        username: user.username,
+        name: user.name,
+      }
+
+      const token = jwt.sign(userForToken, config.key_secret)
+
+      response.success(req, res, {
+        id: user._id,
+        username: user.username,
+        fullname: user.fullname,
+        token,
+      }, 201)
+    } catch (error) {
+      response.error(req, res, error.message, 500)
     }
-
-    const token = jwt.sign(userForToken, config.key_secret)
-
-    response.success(req, res, {
-      id: user._id,
-      username: user.username,
-      fullname: user.fullname,
-      token,
-    }, 201)
   }
 
   async updateUser(req, res) {
@@ -84,7 +88,7 @@ class UserController {
       req.body.profession = req.body.profession === '' ? theUserExist.profession : req.body.profession
       req.body.email = req.body.email === '' ? theUserExist.email : req.body.email
       req.body.description = req.body.description === '' ? theUserExist.description : req.body.description
-      
+
       if (req.file) {
         const { filename, path, size, mimetype, originalname } = req.file
         const resultImageUpload = await cloudinary.v2.uploader.upload(path)
