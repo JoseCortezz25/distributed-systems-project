@@ -118,11 +118,6 @@ class ProjectController {
       projectToUpdate.name = req.body.name ? req.body.name : theProjectExist.name
       projectToUpdate.description = req.body.description ? req.body.description : theProjectExist.description
 
-      console.log(colors.bgRed('projectToUpdate').white)
-      console.log(projectToUpdate)
-      console.log(colors.bgRed('theProjectExist').white)
-      console.log(theProjectExist)
-
       if (theImageExist) {
         console.log(colors.bgGreen('Yeah photo').black)
 
