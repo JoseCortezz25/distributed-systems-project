@@ -23,12 +23,11 @@ class HomeController {
       })
     } catch (error) {
       res.status(500).send(error)
-
     }
   }
 
   /* 🍔 ---- Views ---- 🍔 */
-  
+
   /* Render the home page view */
   initialPageView (req, res) {
     res.render('initial-page', {
@@ -69,9 +68,6 @@ class HomeController {
   }
 
   /* 🍎 ----  Logic ---- 🍎 */
-
-
-
 }
 
 const homeController = new HomeController()

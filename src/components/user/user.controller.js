@@ -8,7 +8,7 @@ const response = require('../../lib/response')
 const colors = require('colors')
 const fs = require('fs-extra')
 const cloudinary = require('cloudinary')
-const { contantsView: { titlePage }, cloudinary: { cloud_name, api_key, api_secret } } = require('../../config/config')
+const { cloudinary: { cloud_name, api_key, api_secret } } = require('../../config/config')
 cloudinary.config({
   cloud_name: cloud_name,
   api_key: api_key,
@@ -16,7 +16,7 @@ cloudinary.config({
 })
 
 class UserController {
-  async getUserById(req, res) {
+  async getUserById (req, res) {
     try {
       const { id } = req.params
       const user = await UserSchema.findById(id).populate('profile_image')
@@ -30,26 +30,26 @@ class UserController {
     }
   }
 
-  async getUserByUsername(req, res) {
+  async getUserByUsername (req, res) {
     try {
-      console.log(colors.bgBlue("Get user by username"));
+      console.log(colors.bgBlue('Get user by username'))
       const { username } = req.params
-      console.log(username);
       const user = await UserSchema.findOne({ username }).populate('profile_image')
       // if (user === null) return response.error(req, res, 'User not found', 404)
       if (!user) return response.error(req, res, 'User not found', 404)
       const projects = await ProjectSchema.find({ user: user._id }).populate('image_project')
       user.password = undefined
       user.projects = projects
-      console.log(user);
+      console.log(user)
       response.success(req, res, user, 200)
     } catch (error) {
       response.error(req, res, error.message, 500)
     }
   }
 
-  async login(req, res) {
+  async login (req, res) {
     try {
+      console.log(colors.bgBlue('Login'))
       const { email, password } = req.body
       const user = await UserSchema.findOne({ email })
 
@@ -61,23 +61,29 @@ class UserController {
       const userForToken = {
         id: user._id,
         username: user.username,
-        name: user.name,
+        name: user.name
       }
 
       const token = jwt.sign(userForToken, config.key_secret)
 
+      console.log({
+        id: user._id,
+        username: user.username,
+        fullname: user.fullname,
+        token
+      })
       response.success(req, res, {
         id: user._id,
         username: user.username,
         fullname: user.fullname,
-        token,
+        token
       }, 201)
     } catch (error) {
       response.error(req, res, error, 401)
     }
   }
 
-  async updateUser(req, res) {
+  async updateUser (req, res) {
     try {
       const { id } = req.params
       const theUserExist = await UserSchema.findOne({ _id: id })
@@ -114,10 +120,9 @@ class UserController {
           runValidators: true
         }
       )
-      console.log("siuuu");
       return response.success(req, res, newUser, 200)
     } catch (error) {
-      console.log(error);
+      console.log(error)
       response.error(req, res, error.message, 500)
     }
   }

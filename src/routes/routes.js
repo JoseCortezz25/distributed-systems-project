@@ -20,12 +20,11 @@ router.post('/user-update/:name', AuthController.isAuthenticated, UserController
 
 // 👉 Project views
 router.get('/project/add', AuthController.isAuthenticated, ProjectController.formAddProjectView)
-router.post('/project/add', AuthController.isAuthenticated, ProjectController.addProject)
+router.post('/project/add', AuthController.isAuthenticated, ProjectController.validateAddProject, ProjectController.addProject)
 router.get('/project/:url', ProjectController.singleProjectView)
 router.get('/project/update/:url', AuthController.isAuthenticated, ProjectController.formUpdateProjectView)
 router.post('/project/update/:url', AuthController.isAuthenticated, ProjectController.updateProject)
 router.get('/project/delete/:id', AuthController.isAuthenticated, ProjectController.deleteProjectById)
-// router.delete('/project/delete', UserController.addProject)
 
 router.get('/logout', (req, res, next) => {
   req.logout()
@@ -33,7 +32,7 @@ router.get('/logout', (req, res, next) => {
 })
 
 // Error View
-router.get('*', function(req, res){
+router.get('*', function (req, res) {
   res.status(404).render('page-not-found', {
     title: '404',
     layout: 'SingleLayout.hbs'

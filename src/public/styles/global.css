@@ -50,8 +50,12 @@ body {
   --color-black: #000;
   --color-blue: #0070f3;
 
-  --color-profile-name: #5c6c79;
-  --color-text-default: #51525d;
+  --color-profile-name: #5C6C79;
+  --color-text-default: #51525D;
+  --color-text-profession: #8e8e8e;
+  --color-text-fullname: #262626;
+  --color-border-gray: #dbdbdb;
+  --color-border-dark-gray: #929292;
 
   --color-alert-light-warn: #fab1a0;
   --color-alert-strong-warn: #d63031;

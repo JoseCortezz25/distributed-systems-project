@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 const cloudinary = require('cloudinary')
 const ProjectSchema = require('../../models/Project')
 const PhotoSchema = require('../../models/Photo')
@@ -6,43 +8,18 @@ const response = require('../../lib/response')
 const colors = require('colors')
 const jwt = require('jsonwebtoken')
 const fs = require('fs-extra')
-const {
-  contantsView: {
-    titlePage
-  },
-  cloudinary: {
-    cloud_name,
-    api_key,
-    api_secret
-  },
-  key_secret
-} = require('../../config/config')
+const helpers = require('../../helpers/helpers')
+const { cloudinary: { cloud_name, api_key, api_secret }, key_secret } = require('../../config/config')
 cloudinary.config({
   cloud_name: cloud_name,
   api_key: api_key,
   api_secret: api_secret
 })
 
-istheUserAuthorized = (authorization) => {
-  try {
-    
-    let token = null
-    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-      token = authorization.substring(7)
-    }
-    const decodedToken = jwt.verify(token, key_secret)
-    
-    if (!token || !decodedToken.id) return false
-    return decodedToken
-  } catch (error) {
-    return false
-  }
-}
 class ProjectController {
-  async getProjects(req, res) {
+  async getProjects (req, res) {
     try {
       const projects = await ProjectSchema.find().populate('image_project').populate('user')
-      console.log(projects);
       if (!projects) {
         return res.status(404).json({
           message: 'No projects found'
@@ -57,7 +34,7 @@ class ProjectController {
     }
   }
 
-  async getProjectByUrl(req, res) {
+  async getProjectByUrl (req, res) {
     try {
       const project = await ProjectSchema.findOne({ url: req.params.url }).populate('image_project')
       const user = await UserSchema.findOne({ _id: project.user }).populate('profile_image')
@@ -69,138 +46,123 @@ class ProjectController {
     }
   }
 
-  async addProject(req, res, next) {
-    const authorization = req.get('authorization')
-    const userAuthorized = istheUserAuthorized(authorization)
-    if (userAuthorized) {
-      const user = await UserSchema.findOne({ _id: userAuthorized.id })
-      const result = await cloudinary.v2.uploader.upload(path)
-      await fs.unlink(path)
-      const { name, description, technologies } = req.body
-      const project = new ProjectSchema({
-        name,
-        description,
-        user: user._id
-      })
-      project.technologies = technologies.split(',')
-      const newProject = await project.save()
-      const photo = new PhotoSchema({
-        filename,
-        originalname,
-        mimetype,
-        size,
-        imageURL: result.url,
-        public_id: result.public_id
-      })
+  async createNewProject (req, res, next) {
+    try {
+      console.log(colors.bgRed('aqui'))
+      const { filename, path, size, mimetype, originalname } = req.file
 
-      const newPhoto = await photo.save();
-      const newProjectWithPhoto = await ProjectSchema.findOneAndUpdate(
-        { url: newProject.url },
-        { image_project: newPhoto._id },
-        {
-          new: true,
-          runValidators: true
-        }
-      )
-      user.projects = user.projects.concat(newProjectWithPhoto)
-      await user.save()
-      response.success(req, res, newProjectWithPhoto, 201)
-    } else {
-      return response.error(req, res, 'Unauthorized', 401)
-    }
+      const authorization = req.get('authorization')
+      console.log(authorization)
+      const userAuthorized = helpers.istheUserAuthorized(authorization)
 
-    if (userAuthorized) {
+      console.log(userAuthorized)
 
-      // try {
-      //   const { filename, path, size, mimetype, originalname } = req.file
-      //   const { name, description, technologies } = req.body
-
-      //   const result = await cloudinary.v2.uploader.upload(path)
-      //   const project = new ProjectSchema({ name, description })
-
-      //   project.technologies = technologies.split(',');
-      //   const newProject = await project.save();
-      //   const photo = new PhotoSchema({ filename, originalname, mimetype, size, imageURL: result.url, public_id: result.public_id })
-      //   const newPhoto = await photo.save()
-
-      //   await ProjectSchema.findOneAndUpdate({ url: newProject.url }, { image_project: newPhoto._id }, { new: true, runValidators: true })
-      //   const projectFull = await ProjectSchema.findOne({ url: newProject.url }).populate('image_project')
-      //   response.success(req, res, projectFull, 201)
-      // } catch (error) {
-      //   return response.error(req, res, error, 500)
-      // }
-    } else {
-      response.error(req, res, 'You dont have permission to do this action', 401)
+      if (userAuthorized) {
+        const user = await UserSchema.findOne({ _id: userAuthorized.id })
+        const result = await cloudinary.v2.uploader.upload(path)
+        await fs.unlink(path)
+        const { name, description, technologies } = req.body
+        const project = new ProjectSchema({
+          name,
+          description,
+          user: user._id
+        })
+        project.technologies = technologies.split(',')
+        const newProject = await project.save()
+        const photo = new PhotoSchema({
+          filename,
+          originalname,
+          mimetype,
+          size,
+          imageURL: result.url,
+          public_id: result.public_id
+        })
+        const newPhoto = await photo.save()
+        const newProjectWithPhoto = await ProjectSchema.findOneAndUpdate(
+          { url: newProject.url },
+          { image_project: newPhoto._id },
+          {
+            new: true,
+            runValidators: true
+          }
+        )
+        user.projects = user.projects.concat(newProjectWithPhoto)
+        await user.save()
+        response.success(req, res, newProjectWithPhoto, 201)
+      } else {
+        response.error(req, res, 'Unauthorized', 401)
+      }
+    } catch (error) {
+      response.error(req, res, 'Has occurred an error', 400)
     }
   }
 
-  async updateProject(req, res) {
-    let theImageExist;
+  async updateProject (req, res) {
+    let theImageExist
     try {
+      console.log(colors.bgCyan('Update project'))
+      // eslint-disable-next-line no-unneeded-ternary
       theImageExist = !req.file ? false : true
+
+      console.log(req.body)
+
       const theProjectExist = await ProjectSchema.findOne({ url: req.body.url }).populate('image_project')
       if (!theProjectExist) return response.error(req, res, 'Project not found', 404)
       const projectToUpdate = req.body
 
       projectToUpdate.technologies = req.body.technologies == 'undefined' || !req.body.technologies ? theProjectExist.technologies : [...theProjectExist.technologies, req.body.technologies.split(',')].flat()
-      projectToUpdate.technologies = projectToUpdate.technologies.filter(function(ele , pos){
-        return projectToUpdate.technologies.indexOf(ele) == pos;
-      }) 
+      projectToUpdate.technologies = projectToUpdate.technologies.filter(function (ele, pos) {
+        return projectToUpdate.technologies.indexOf(ele) == pos
+      })
+
+      projectToUpdate.name = req.body.name ? req.body.name : theProjectExist.name
+      projectToUpdate.description = req.body.description ? req.body.description : theProjectExist.description
+
+      console.log(colors.bgRed('projectToUpdate').white)
+      console.log(projectToUpdate)
+      console.log(colors.bgRed('theProjectExist').white)
+      console.log(theProjectExist)
 
       if (theImageExist) {
+        console.log(colors.bgGreen('Yeah photo').black)
+
         const { filename, path, size, mimetype, originalname } = req.file
         const result = await cloudinary.v2.uploader.upload(path)
         await fs.unlink(path)
-        const updatedImage = await PhotoSchema.findOneAndUpdate({
-          _id: theProjectExist.image_project
-        },
-          {
-            filename,
-            originalname,
-            mimetype,
-            size,
-            imageURL: result.url,
-            public_id: result.public_id
-          },
-          {
-            new: true,
-            runValidators: true
-          }
+        const updatedImage = await PhotoSchema.findOneAndUpdate(
+          { _id: theProjectExist.image_project._id },
+          { filename, originalname, mimetype, size, imageURL: result.url, public_id: result.public_id },
+          { new: true, runValidators: true }
         )
+
         projectToUpdate.image_project = updatedImage._id
         const project = await ProjectSchema.findOneAndUpdate(
-          {
-            url: req.body.url
-          },
+          { url: req.body.url },
           projectToUpdate,
-          {
-            new: true,
-            runValidators: true
-          }
+          { new: true, runValidators: true }
         )
         return response.success(req, res, project, 201)
       } else {
-        const photoFinded = await PhotoSchema.findOne({ _id: theProjectExist.image_project })
+        console.log(colors.bgRed('withot photo').white)
+        const photoFinded = await PhotoSchema.findOne({ _id: theProjectExist.image_project._id })
         projectToUpdate.image_project = photoFinded._id
         const project = await ProjectSchema.findOneAndUpdate(
-          {
-            url: req.body.url
-          },
+          { url: req.body.url },
           projectToUpdate,
-          {
-            new: true,
-            runValidators: true
-          }
+          { new: true, runValidators: true }
         )
+
+        console.log(colors.bgWhite(project).black)
         return response.success(req, res, project, 201)
       }
     } catch (error) {
-      response.error(req, res, 'A problema has ocurred with creation', 201)
+      console.log(error)
+      response.error(req, res, 'A problema has ocurred with creation', 404)
     }
   }
 
-  async deleteProject(req, res) {
-    try {      
+  async deleteProject (req, res) {
+    try {
       const project = await ProjectSchema.findOne({ _id: req.params.id }).populate('image_project')
       if (!project) return response.error(req, res, 'Project not found', 404)
       const idPhoto = project.image_project._id
@@ -208,7 +170,7 @@ class ProjectController {
       await cloudinary.v2.uploader.destroy(idPublicPhoto)
       await PhotoSchema.findOneAndRemove({ _id: idPhoto })
       await ProjectSchema.findOneAndRemove({ _id: req.params.id })
-      
+
       return response.success(req, res, 'Project deleted', 200)
     } catch (error) {
       response.error(req, res, error, 500)

@@ -9,6 +9,7 @@ module.exports = {
     skills.forEach(skill => {
       html += `<li ${selected.includes(skill) ? 'class="active"' : ''}>${skill}</li>`
     })
+    // eslint-disable-next-line no-return-assign
     return opciones.fn().html = html
   },
 
@@ -22,20 +23,25 @@ module.exports = {
     technologies.forEach(technology => {
       html += `<li ${selected.includes(technology) ? 'class="active"' : ''}>${technology}</li>`
     })
+    // eslint-disable-next-line no-return-assign
     return options.fn().html = html
   },
 
   showAlerts: (errors = {}, alerts) => {
     const category = Object.keys(errors)
+    console.log(category)
+    console.log(errors)
     let html = ''
-    const errorsExists = category[1] ? true : false
-    if (errorsExists) {
-      if (category.length) {
-        errors[category].forEach(error => {
-          html += `<div class="${category} alerta">${error}</div>`
-        })
-      }
+    // const errorsExists = category[1] ? true : false
+    // console.log(errorsExists);
+    // if (!errorsExists) {
+    if (category.length) {
+      errors[category].forEach(error => {
+        html += `<div class="${category} alerta">${error}</div>`
+      })
     }
+    // }
+    // eslint-disable-next-line no-return-assign
     return alerts.fn().html = html
   },
 

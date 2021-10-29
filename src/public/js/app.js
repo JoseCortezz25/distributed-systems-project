@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const skills = document.querySelector('.knowledge-list')
   const technologies = document.querySelector('.knowledge-list-updateproject')
 
-  let alerts = document.querySelector('.alertas')
+  const alerts = document.querySelector('.alertas')
 
   if (alerts) {
     cleanAlerts()
@@ -12,10 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     skills.addEventListener('click', agregarSkills)
   }
 
-  if (technologies) {
-    technologies.addEventListener('click', addTechnologies)
-    technologiesSelected()
-  }
+  // if (technologies) {
+  //   technologies.addEventListener('click', addTechnologies)
+  //   technologiesSelected()
+  // }
 })
 
 const skills = new Set()
@@ -30,7 +30,7 @@ const agregarSkills = e => {
     }
   }
   const skillsArray = [...skills]
-  document.querySelector("#skills").value = skillsArray
+  document.querySelector('#skills').value = skillsArray
 }
 
 // Create a new project
@@ -47,18 +47,18 @@ const addTechnologies = e => {
   }
   console.log(technologies)
   const technologiesArray = [...technologies]
-  document.querySelector("#technologies").value = technologiesArray
+  document.querySelector('#technologies').value = technologiesArray
 }
 
-//Update a project
-const technologiesSelected = ( ) => {
+// Update a project
+const technologiesSelected = () => {
   const selectedSkills = Array.from(document.querySelectorAll('.knowledge-list-updateproject .active'))
   selectedSkills.forEach(skill => {
     technologies.add(skill.textContent)
   })
 
   const technologiesArray = [...technologies]
-  document.querySelector("#technologies").value = technologiesArray
+  document.querySelector('#technologies').value = technologiesArray
 }
 
 const cleanAlerts = () => {

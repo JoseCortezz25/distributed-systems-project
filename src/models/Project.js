@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
-const slug = require('slug');
-const shortid = require('shortid');
+const slug = require('slug')
+const shortid = require('shortid')
 
 const projectSchema = new Schema({
   name: {
@@ -24,19 +24,19 @@ const projectSchema = new Schema({
   },
   image_project: {
     type: Schema.Types.ObjectId,
-    ref: 'Photo',
+    ref: 'Photo'
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'User'
   }
 })
 
 projectSchema.pre('save', function (next) {
-  const url = slug(this.name);
-  this.url = `${url}-${shortid.generate()}`;
-  next();
-});
+  const url = slug(this.name)
+  this.url = `${url}-${shortid.generate()}`
+  next()
+})
 
 const Project = model('Project', projectSchema)
 module.exports = Project

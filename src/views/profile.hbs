@@ -11,27 +11,31 @@
     </div>
 
     <div class="profile-info">
-      <h1 class="profile-name">{{user.fullname}}</h1>
+      <div class="box-fullname">
+        <h1 class="profile-name">{{user.fullname}}</h1>
+        {{#if (validUserToUpdateProject currentUser user)}}
+        <a class="btn-edit-user" href="/user-update/{{user.username}}">Edit profile</a>
+        {{/if}}
+      </div>
       <p class="profile-profession">{{user.profession}}</p>
+      <p class="profile-description">{{user.description}}</p>
       {{#if (validUserToUpdateProject currentUser user)}}
       <div class="profile-buttons">
         <a class="btn-standard btn-add" href="/project/add">Add new Project</a>
-        <a class="btn-standard btn-add" href="/user-update/{{user.username}}">Edit my profile</a>
       </div>
       {{/if}}
     </div>
   </div>
 
   <div class="section-profile-info">
-    <h2 class="title-section-profile">Description</h2>
-    <p class="profile-description">{{user.description}}</p>
-  </div>
-
-  <div class="section-profile-projects">
-    <h2 class="title-section-profile">My projects</h2>
-    {{#if projects}}
-    <masonry-layout cols="3" gap="20">
-      {{#each projects}}
+    <div class="feed-projects-profile">
+      <div class="box-title-projects">
+        <span class="icon-feed"><img src="/static/icons/icon-feed.svg" alt="icon" /></span>
+        <p>Projects</p>
+      </div>
+      {{#if projects}}
+      <masonry-layout cols="3" gap="20">
+        {{#each projects}}
         <a class="link-card-project" href="/project/{{url}}">
           <div class="card-project">
 
@@ -51,12 +55,15 @@
             </div>
           </div>
         </a>
-      {{/each}}
-    </masonry-layout>
-    {{else}}
-    <div class="message-not-project">
-      <p>😕 You don't have any project yet</p>
+        {{/each}}
+      </masonry-layout>
+      {{else}}
+      <div class="message-not-project">
+        <p>😕 You don't have any project yet</p>
+        <a class="btn-standard btn-add" href="/project/add">Add new Project</a>
+      </div>
+      {{/if}}
     </div>
-    {{/if}}
   </div>
+
 </section>

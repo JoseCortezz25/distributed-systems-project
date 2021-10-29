@@ -12,8 +12,9 @@ class AuthController {
     })(req, res)
   }
 
-  async logout (req, res) {
-    req.logout()
+  logout (req, res) {
+    req.logout(logout)
+    res.flash('corecto', 'You have logged out')
     res.redirect('/')
   }
 

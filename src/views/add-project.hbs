@@ -7,7 +7,6 @@
       <label for="name">Name of the project</label>
       <input type="text" name="name" placeholder="Enter the name of your project" class="input-control">
 
-
       <label for="description">Description of the project</label>
 
       <input type="hidden" name="description" id="description">
@@ -18,12 +17,12 @@
         {{#selectTechnologies a}}
         {{/selectTechnologies}}
       </div>
+      <input type="hidden" name="technologies" id="technologies">
 
       <label for="">Upload an image of the project</label>
       <input type="file" name="image" class="custom-file-input" id="inputGroupFile01">
       <label for="inputGroupFile01" class="custom-file-label">Choose file</label>
 
-      <input type="hidden" name="technologies" id="technologies">
       <input type="submit" value="Add project" class="btn-standard btn-form">
     </form>
   </div>

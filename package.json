@@ -32,18 +32,19 @@
     "mongoose": "^6.0.7",
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
+    "nodemon": "^2.0.12",
     "passport": "^0.5.0",
     "passport-local": "^1.0.0",
     "random-username-generator": "^1.0.4",
     "shortid": "^2.2.16",
     "slug": "^5.1.0",
-    "nodemon": "^2.0.12"
+    "sweetalert2": "^11.1.9"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
     "babel-loader": "^8.2.2",
-    "standard": "^16.0.3",
+    "standard": "^16.0.4",
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0"
   },

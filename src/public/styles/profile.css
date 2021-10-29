@@ -1,6 +1,5 @@
-.container-profile {
+/* .container-profile {
   width: 100%;
-  /* height: 100vh; */
 }
 
 .section-profile {
@@ -12,7 +11,6 @@
   margin-bottom: 2rem;
   width: 50%;
   margin: auto;
-  /* border: 1px solid red; */
 }
 
 .profile-info {
@@ -21,19 +19,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* border: 1px solid blue; */
   margin-left: 25px; 
 }
 
 .profile-buttons {
   width: 100%;
-  /* border: 1px solid green; */
 }
 
 .profile-image {
   width: 150px;
   height: 150px;
-  /* border: 1px solid green; */
 }
 .profile-image img {
   width: 150px;
@@ -75,7 +70,6 @@
 .profile-skills {
   width: 100%;
   padding-top: 15px;
-  /* border: 1px solid green; */
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 6px;
@@ -105,7 +99,6 @@
   margin-top: 3rem;
   margin: auto;
   padding-bottom: 3.4rem;
-  /* border: 1px solid red; */
 }
 
 .message-not-project {
@@ -114,4 +107,137 @@
   padding: 15px 10px;
   display: flex;
   justify-content: center;
+} */
+
+.container-profile {
+  width: 100%;
+}
+
+.section-profile {
+  width: 70%;
+  margin: auto;
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 65%;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 25px;
+  align-items: flex-start; 
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  margin: auto;
+}
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.box-info-principal {
+  width: 90%;
+  height: 100%;
+}
+
+.profile-name {
+  color: var(--color-text-fullname);
+  text-transform: capitalize;
+  letter-spacing: -1px;
+  font-size: 2.8rem;
+  font-weight: 500;
+} 
+
+.profile-profession {
+  color: var(--color-text-profession);
+  text-transform: capitalize;
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+}
+
+.profile-description {
+  font-size: 1.6rem;
+  font-weight: lighter;
+}
+
+.profile-skills {
+  width: 100%;
+  padding-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.profile-skill {
+  background-color: hsla(278, 22%, 14%, 80%);
+  color: var(--color-white);
+  font-size: 1.3rem;
+  text-align: center;
+  padding: 8px 11px;
+  border-radius: 25px;
+}
+
+.section-profile-info {
+  /* border: 1px solid red; */
+  width: 70%;
+  margin: auto;
+  padding-top: 3.4rem;
+  padding-bottom: 2rem;
+  /* border-top: 2px solid var(--color-gray); */
+  /* border-bottom: 2px solid var(--color-gray); */
+}
+
+.feed-projects-profile {
+  /* border: 1px solid blue; */
+}
+
+.box-title-projects {
+  width: 100%;
+  padding: 12px 0px 25px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid var(--color-border-gray);
+}
+
+.box-title-projects p {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.box-title-projects .icon-feed {
+  width: 22px;
+  margin-right: 5px;
+}
+.box-title-projects .icon-feed img {
+  width: 100%;
+}
+
+.box-fullname {
+  display: flex;
+  align-items: center;
+}
+
+.section-not-resources {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.section-not-resources p {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 2.5rem;
 }
