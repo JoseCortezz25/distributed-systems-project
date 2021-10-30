@@ -1,8 +1,11 @@
+import axios from 'axios'
+import Swal from 'sweetalert2'
+
 document.addEventListener('DOMContentLoaded', () => {
   const skills = document.querySelector('.knowledge-list')
   const technologies = document.querySelector('.knowledge-list-updateproject')
-
   const alerts = document.querySelector('.alertas')
+  const btnDeleteProject = document.querySelector('.btn-delete')
 
   if (alerts) {
     cleanAlerts()
@@ -12,10 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     skills.addEventListener('click', agregarSkills)
   }
 
-  // if (technologies) {
-  //   technologies.addEventListener('click', addTechnologies)
-  //   technologiesSelected()
-  // }
+  if (technologies) {
+    technologies.addEventListener('click', addTechnologies)
+    technologiesSelected()
+  }
+
+  btnDeleteProject.addEventListener('click', deleteOneProject)
 })
 
 const skills = new Set()
@@ -61,6 +66,7 @@ const technologiesSelected = () => {
   document.querySelector('#technologies').value = technologiesArray
 }
 
+// Clean alerts
 const cleanAlerts = () => {
   const alerts = document.querySelector('.alertas')
   const intervalCleanAlerts = setInterval(() => {
@@ -71,4 +77,37 @@ const cleanAlerts = () => {
       clearInterval(intervalCleanAlerts)
     }
   }, 1500)
+}
+
+const deleteOneProject = (e) => {
+  e.preventDefault()
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const url = `${window.location.origin}/api/delete-project/${e.target.dataset.delete}`
+      axios.delete(url)
+        .then(res => {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          ).then((result) => {
+            if (result.isConfirmed) {
+              window.location.assign(`${window.location.origin}/feed`)
+            }
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      e.target.parentElement.parentElement.parentElement.removeChild(e.target.parentElement.parentElement)
+    }
+  })
 }

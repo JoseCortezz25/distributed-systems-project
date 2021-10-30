@@ -158,8 +158,10 @@ class ProjectController {
 
   async deleteProject (req, res) {
     try {
-      const project = await ProjectSchema.findOne({ _id: req.params.id }).populate('image_project')
+      const { id } = req.params
+      const project = await ProjectSchema.findOne({ _id: id }).populate('image_project')
       if (!project) return response.error(req, res, 'Project not found', 404)
+
       const idPhoto = project.image_project._id
       const idPublicPhoto = project.image_project.public_id
       await cloudinary.v2.uploader.destroy(idPublicPhoto)

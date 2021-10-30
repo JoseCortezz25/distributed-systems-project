@@ -10,7 +10,7 @@ const userSchema = new Schema({
   },
   username: {
     type: String,
-    lowercase: true,
+    lowercase: true
   },
   password: {
     type: String,
@@ -58,7 +58,7 @@ userSchema.pre('save', async function (next) {
 // Generate random username
 userSchema.pre('save', function (next) {
   try {
-    rug.setSeperator('_');
+    rug.setSeperator('_')
     this.username = rug.generate()
     next()
   } catch (err) {
