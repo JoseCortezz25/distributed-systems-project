@@ -158,6 +158,7 @@ class ProjectController {
 
   async deleteProject (req, res) {
     try {
+      console.log(colors.bgCyan('Delete project'))
       const { id } = req.params
       const project = await ProjectSchema.findOne({ _id: id }).populate('image_project')
       if (!project) return response.error(req, res, 'Project not found', 404)
@@ -168,6 +169,7 @@ class ProjectController {
       await PhotoSchema.findOneAndRemove({ _id: idPhoto })
       await ProjectSchema.findOneAndRemove({ _id: req.params.id })
 
+      console.log(colors.bgCyan('Project deleted'))
       return response.success(req, res, 'Project deleted', 200)
     } catch (error) {
       response.error(req, res, error, 500)

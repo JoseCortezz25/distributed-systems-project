@@ -1,6 +1,6 @@
 const express = require('express')
-const morgan = require('morgan')
-const multer = require('multer')
+// const morgan = require('morgan')
+// const multer = require('multer')
 const path = require('path')
 const exphbs = require('express-handlebars')
 const colors = require('colors')
@@ -14,6 +14,8 @@ const errors = require('./lib/errors')
 const expressValidator = require('express-validator')
 const flash = require('connect-flash')
 const passport = require('passport')
+
+const { upload } = require('./config/multer')
 
 const app = express()
 
@@ -39,24 +41,24 @@ app.use(express.urlencoded({ extended: true }))
 // app.use(morgan('dev'))
 
 // Config Multer
-const storage = multer.diskStorage({
-  destination: path.join(__dirname, 'public/uploads'),
-  filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + path.extname(file.originalname))
-  }
-})
-app.use(multer({ storage }).single('image'))
-
+// const storage = multer.diskStorage({
+//   destination: path.join(__dirname, 'public/uploads'),
+//   filename: (req, file, cb) => {
+//     cb(null, new Date().getTime() + path.extname(file.originalname))
+//   }
+// })
+// app.use(multer({ storage }).single('image'))
+app.use(upload)
 app.use(expressValidator())
 
-//session
+// session
 app.use(session({
   secret: config.secret,
   key: config.key,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: mongoUrl,
+    mongoUrl: mongoUrl
   })
 }))
 
@@ -69,7 +71,7 @@ app.use(flash())
 
 app.use((req, res, next) => {
   res.locals.messages = req.flash()
-  res.locals.currentUser = req.user || null 
+  res.locals.currentUser = req.user || null
   next()
 })
 
@@ -85,8 +87,8 @@ app.use(require('./routes/routes'))
 require('./lib/database')
 require('./lib/passport')
 
-// Middleware responsible for errors 
-app.use(errors);
+// Middleware responsible for errors
+app.use(errors)
 
 // Start
 app.listen(config.port, () => {

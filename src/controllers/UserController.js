@@ -5,7 +5,6 @@ const colors = require('colors')
 const PhotoSchema = require('../models/Photo')
 const PhotoProfileSchema = require('../models/PhotoProfile')
 const UserSchema = require('../models/User')
-const response = require('../lib/response')
 const fs = require('fs-extra')
 const TITLE_PAGE = titlePage
 cloudinary.config({
@@ -15,9 +14,8 @@ cloudinary.config({
 })
 
 class UserController {
-
   /* 🍔 ---- Views ---- 🍔 */
-  async profile(req, res) {
+  async profile (req, res) {
     try {
       const { name } = req.params
       const user = await UserSchema.findOne({ username: name }).populate('profile_image')
@@ -33,7 +31,7 @@ class UserController {
     }
   }
 
-  async userUpdateView(req, res) {
+  async userUpdateView (req, res) {
     try {
       const { name } = req.params
       const user = await UserSchema.findOne({ username: name })
@@ -46,10 +44,9 @@ class UserController {
     }
   }
 
-
   /* 🍎 ----  Logic ---- 🍎 */
 
-  async register(req, res) {
+  async register (req, res) {
     const errors = req.validationErrors()
     if (!errors) {
       try {
@@ -57,7 +54,7 @@ class UserController {
         if (!theUserExist) req.flash('error', 'Username already exist')
 
         const user = new UserSchema(req.body)
-        const newUser = await user.save()
+        await user.save()
 
         req.flash('correcto', 'You have successfully registered')
         res.redirect('/login')
@@ -69,7 +66,7 @@ class UserController {
     }
   }
 
-  async userUpdate(req, res) {
+  async userUpdate (req, res) {
     try {
       const { name } = req.params
       const theUserExist = await UserSchema.findOne({ username: name })
@@ -108,7 +105,7 @@ class UserController {
     }
   }
 
-  async uploadImage(image) {
+  async uploadImage (image) {
     if (!image) return false
     try {
       console.log(colors.bgCyan.black('Uploading image...'))
@@ -130,8 +127,7 @@ class UserController {
     }
   }
 
-
-  validateRegisters(req, res, next) {
+  validateRegisters (req, res, next) {
     // sanitizer
     req.sanitizeBody('fullname').escape()
     // req.sanitizeBody('username').escape()
@@ -166,7 +162,7 @@ class UserController {
     next()
   }
 
-  async validateUpdateUser (req, res ,next) {
+  async validateUpdateUser (req, res, next) {
     // sanitizer
     req.sanitizeBody('fullname').escape()
     req.sanitizeBody('email').escape()

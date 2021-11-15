@@ -1,5 +1,4 @@
 const passport = require('passport')
-const mongoose = require('mongoose')
 require('../lib/database')
 
 class AuthController {
@@ -14,12 +13,12 @@ class AuthController {
 
   logout (req, res) {
     req.logout(logout)
-    res.flash('corecto', 'You have logged out')
+    res.flash('correcto', 'You have logged out')
     res.redirect('/')
   }
 
-  isAuthenticated(req, res, next) {
-    if(req.isAuthenticated()) {
+  isAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
       return next()
     }
     res.redirect('/login')

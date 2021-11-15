@@ -174,3 +174,14 @@ body {
 div#swal2-html-container {
 font-size: 1.3rem;
 }
+
+blockquote {
+  font-size: 2rem;
+  font-style: italic;
+  border-left: 2px solid black;
+  padding-left: 10px;
+}
+
+blockquote::after, blockquote::before {
+  content: '"';
+}

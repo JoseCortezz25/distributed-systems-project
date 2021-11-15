@@ -1,6 +1,6 @@
-const  { Schema, model } = require('mongoose')
-const slug = require('slug');
-const shortid = require('shortid');
+const { Schema, model } = require('mongoose')
+const slug = require('slug')
+const shortid = require('shortid')
 
 const photoProfileSchema = new Schema({
   filename: {
@@ -12,7 +12,7 @@ const photoProfileSchema = new Schema({
   mimetype: {
     type: String
   },
-  size: { 
+  size: {
     type: Number
   },
   user_id: {
@@ -20,7 +20,7 @@ const photoProfileSchema = new Schema({
     ref: 'User'
   },
   created_at: {
-    type: Date, 
+    type: Date,
     default: Date.now()
   },
   url: {
@@ -38,10 +38,10 @@ const photoProfileSchema = new Schema({
 })
 
 photoProfileSchema.pre('save', function (next) {
-  const url = slug(this.filename);
-  this.url = `${url}-${shortid.generate()}`;
-  next();
-});
+  const url = slug(this.filename)
+  this.url = `${url}-${shortid.generate()}`
+  next()
+})
 
 const PhotoProfile = model('PhotoProfile', photoProfileSchema)
 module.exports = PhotoProfile

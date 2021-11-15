@@ -6,6 +6,7 @@ const ProjectSchema = require('../models/Project')
 const PhotoSchema = require('../models/Photo')
 const User = require('../models/User')
 const fs = require('fs-extra')
+const colors = require('colors')
 const TITLE_PAGE = titlePage
 cloudinary.config({
   cloud_name: cloud_name,
@@ -25,7 +26,7 @@ class ProjectController {
 
       const userIdFromProject = project.user._id
       const user = await User.findOne({ _id: userIdFromProject }).populate('profile_image')
-      console.log(user)
+
       res.render('single-project', {
         title: `${project.name} | ${TITLE_PAGE}`,
         project,
@@ -198,6 +199,10 @@ class ProjectController {
       return
     }
     next()
+  }
+
+  verifyUploadedImage (req, res, next) {
+    console.log(colors.bgBlue('[MULTER]'), 'Verifying uploaded image...')
   }
 }
 

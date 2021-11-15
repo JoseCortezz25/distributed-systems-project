@@ -20,6 +20,7 @@ router.post('/user-update/:name', AuthController.isAuthenticated, UserController
 
 // 👉 Project views
 router.get('/project/add', AuthController.isAuthenticated, ProjectController.formAddProjectView)
+// ProjectController.validateAddProject,
 router.post('/project/add', AuthController.isAuthenticated, ProjectController.validateAddProject, ProjectController.addProject)
 router.get('/project/:url', ProjectController.singleProjectView)
 router.get('/project/update/:url', AuthController.isAuthenticated, ProjectController.formUpdateProjectView)
