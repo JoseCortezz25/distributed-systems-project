@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt')
 const UserSchema = require('../../models/User')
 const response = require('../../lib/response')
-// const helpers = require('../../helpers/helpers')
-const colors = require('colors')
 const auth = require('./auth.index')
+const rug = require('random-username-generator')
+
 class AuthController {
   async isExistsUser (req, res) {
     const { email } = req.body
@@ -22,12 +22,11 @@ class AuthController {
   // Create a new user
   async createUser (req, res) {
     try {
-      console.log(colors.bgBlue('Create user').black)
-      console.log(req.body)
-
+      rug.setSeperator('_')
+      req.body.username = rug.generate()
       const user = new UserSchema(req.body)
       const newUser = await user.save()
-      console.log(colors.bgGreen.black(newUser))
+
       newUser.password = undefined
       response.success(req, res, newUser, 200)
     } catch (error) {

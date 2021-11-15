@@ -59,8 +59,10 @@
       </masonry-layout>
       {{else}}
       <div class="message-not-project">
-        <p>😕 You don't have any project yet</p>
-        <a class="btn-standard btn-add" href="/project/add">Add new Project</a>
+        <p>😕 No project added yet</p>
+        {{#if (validUserToUpdateProject currentUser user)}}
+        <a class="btn-standard btn-add" href="/project/add">Add your first project</a>
+        {{/if}}
       </div>
       {{/if}}
     </div>

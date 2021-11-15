@@ -8,13 +8,13 @@ const PhotoSchema = require('../models/Photo')
 const PhotoProfileSchema = require('../models/PhotoProfile')
 const UserSchema = require('../models/User')
 const fs = require('fs-extra')
+const rug = require('random-username-generator')
 const TITLE_PAGE = titlePage
 cloudinary.config({
   cloud_name: cloud_name,
   api_key: api_key,
   api_secret: api_secret
 })
-
 class UserController {
   /* 🍔 ---- Views ---- 🍔 */
   async profile (req, res) {
@@ -58,6 +58,9 @@ class UserController {
           req.flash('error', 'The user already exist')
           res.redirect('/register')
         }
+
+        rug.setSeperator('_')
+        req.body.username = rug.generate()
 
         const user = new UserSchema(req.body)
         await user.save()

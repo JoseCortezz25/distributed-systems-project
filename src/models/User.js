@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
-const rug = require('random-username-generator')
 
 const userSchema = new Schema({
   fullname: {
@@ -56,15 +55,15 @@ userSchema.pre('save', async function (next) {
 })
 
 // Generate random username
-userSchema.pre('save', function (next) {
-  try {
-    rug.setSeperator('_')
-    this.username = rug.generate()
-    next()
-  } catch (err) {
-    next(err)
-  }
-})
+// userSchema.pre('save', function (next) {
+//   try {
+//     rug.setSeperator('_')
+//     this.username = rug.generate()
+//     next()
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 userSchema.post('save', function (err, doc, next) {
   if (err.name === 'MongoServerError' && err.code === 11000) {
