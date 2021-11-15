@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const technologies = document.querySelector('.knowledge-list-updateproject')
   const alerts = document.querySelector('.alertas')
   const btnDeleteProject = document.querySelector('.btn-delete')
+  const containerControlButtons = document.querySelector('.control-buttons')
 
   if (alerts) {
     cleanAlerts()
@@ -20,7 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     technologiesSelected()
   }
 
-  btnDeleteProject.addEventListener('click', deleteOneProject)
+  if (containerControlButtons) {
+    btnDeleteProject.addEventListener('click', deleteOneProject)
+  }
 })
 
 const skills = new Set()
@@ -69,6 +72,10 @@ const technologiesSelected = () => {
 // Clean alerts
 const cleanAlerts = () => {
   const alerts = document.querySelector('.alertas')
+
+  console.log('-------alerts-------')
+  console.log(alerts)
+
   const intervalCleanAlerts = setInterval(() => {
     if (alerts.children.length > 0) {
       alerts.removeChild(alerts.children[0])

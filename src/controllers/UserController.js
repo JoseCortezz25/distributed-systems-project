@@ -1,4 +1,6 @@
+/* eslint-disable no-extra-boolean-cast */
 const cloudinary = require('cloudinary')
+// eslint-disable-next-line camelcase
 const { contantsView: { titlePage }, cloudinary: { cloud_name, api_key, api_secret } } = require('../config/config')
 const ProjectSchema = require('../models/Project')
 const colors = require('colors')
@@ -20,7 +22,6 @@ class UserController {
       const { name } = req.params
       const user = await UserSchema.findOne({ username: name }).populate('profile_image')
       const projects = await ProjectSchema.find({ user: user._id }).populate('image_project')
-      console.log(user)
       res.render('profile', {
         title: `${name} | ${TITLE_PAGE}`,
         user,
@@ -50,8 +51,13 @@ class UserController {
     const errors = req.validationErrors()
     if (!errors) {
       try {
-        const theUserExist = await UserSchema.findOne({ username: req.body.username })
-        if (!theUserExist) req.flash('error', 'Username already exist')
+        console.log(colors.bgGreen('---> Registering...   ------------').black)
+        const theUserExist = await UserSchema.findOne({ email: req.body.email })
+
+        if (Boolean(theUserExist)) {
+          req.flash('error', 'The user already exist')
+          res.redirect('/register')
+        }
 
         const user = new UserSchema(req.body)
         await user.save()
@@ -59,7 +65,7 @@ class UserController {
         req.flash('correcto', 'You have successfully registered')
         res.redirect('/login')
       } catch (error) {
-        console.log(error)
+        console.log(colors.red(error))
         req.flash('error', error)
         res.redirect('/register')
       }

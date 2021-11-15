@@ -109,6 +109,13 @@
   justify-content: center;
 } */
 
+.message-not-project {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .container-profile {
   width: 100%;
 }

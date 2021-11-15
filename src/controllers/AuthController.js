@@ -12,7 +12,7 @@ class AuthController {
   }
 
   logout (req, res) {
-    req.logout(logout)
+    req.logout()
     res.flash('correcto', 'You have logged out')
     res.redirect('/')
   }

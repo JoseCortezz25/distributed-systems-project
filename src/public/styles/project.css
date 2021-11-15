@@ -42,6 +42,10 @@
   color: var(--color-black);
 }
 
+.control-buttons {
+  display: flex;
+}
+
 @media screen and (max-width: 700px) {
   .container-single-project {
     height: calc(100% - 70px);

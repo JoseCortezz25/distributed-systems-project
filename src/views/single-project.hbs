@@ -23,9 +23,11 @@
       <li>{{this}}</li>
       {{/each}}
     </ul>
+    <div class="control-buttons">
     {{#if (validUserToUpdateProject currentUser owner)}}
       <a href="/project/update/{{project.url}}" class="btn-standard btn-edit">Edit project</a>
       <a class="btn-standard btn-delete" data-delete={{project.id}}>Delete project</a>
     {{/if}}
+    </div>
   </div>
 </section>
