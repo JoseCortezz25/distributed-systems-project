@@ -1,6 +1,4 @@
 const express = require('express')
-// const morgan = require('morgan')
-// const multer = require('multer')
 const path = require('path')
 const exphbs = require('express-handlebars')
 const colors = require('colors')
@@ -38,16 +36,7 @@ app.set('view engine', '.hbs')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-// app.use(morgan('dev'))
 
-// Config Multer
-// const storage = multer.diskStorage({
-//   destination: path.join(__dirname, 'public/uploads'),
-//   filename: (req, file, cb) => {
-//     cb(null, new Date().getTime() + path.extname(file.originalname))
-//   }
-// })
-// app.use(multer({ storage }).single('image'))
 app.use(upload)
 app.use(expressValidator())
 
