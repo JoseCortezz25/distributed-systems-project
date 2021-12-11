@@ -39,10 +39,6 @@ class AuthController {
     try {
       const { email, password } = req.body
 
-      // if (!helpers.isEmail(email)) {
-      //   return response.error(req, res, 'Email is invalid', 400)
-      // }
-
       const user = await UserSchema.findOne({ email: email })
       if (!user) {
         return response.error(req, res, 'User not found', 404)
@@ -59,30 +55,6 @@ class AuthController {
       console.log(error)
       response.error(req, res, error, 500)
     }
-  }
-
-  validateRegisters (req, res) {
-    // sanitizer
-    req.sanitizeBody('fullname').escape()
-    req.sanitizeBody('username').escape()
-    req.Body('email').escape()
-    req.sanitizeBody('confirmpassword').escape()
-    req.sanitizeBody('description').escape()
-    req.sanitizeBody('profession').escape()
-    req.checkBody('fullname', 'Fullname is required').notEmpty()
-    req.checkBody('username', 'Username is required').notEmpty()
-    req.checkBody('email', 'Email is required').notEmpty()
-    req.checkBody('email', 'Email is not valid').isEmail()
-    req.checkBody('password', 'Password is required').notEmpty()
-    req.checkBody('confirmpassword', 'Confirm password is required').notEmpty()
-    req.checkBody('confirmpassword', 'Confirm password and password are different').equals(req.body.password)
-    req.checkBody('description', 'Description is required').notEmpty()
-    req.checkBody('profession', 'Profession is required').notEmpty()
-
-    const errors = req.validationErrors()
-    console.log(errors)
-    // eslint-disable-next-line no-useless-return
-    return
   }
 }
 
