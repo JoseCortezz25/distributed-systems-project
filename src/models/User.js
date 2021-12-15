@@ -40,7 +40,15 @@ const userSchema = new Schema({
     ref: 'Project'
   }],
   token: String,
-  expiration: Date
+  expiration: Date,
+  followers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 })
 
 // Encrypt password

@@ -126,6 +126,59 @@ class UserController {
       response.error(req, res, error.message, 500)
     }
   }
+
+  async followUser (req, res) {
+    try {
+      const { id_sender: idSender, id_receiver: idReceiver } = req.params
+      const userSender = await UserSchema.findById(idSender)
+      const userToFollow = await UserSchema.findById(idReceiver)
+      const userFollowed = userSender.following.find(user => user.toString() === idReceiver)
+
+      if (!userFollowed) {
+        userSender.following = userSender.following.concat(idReceiver)
+        userToFollow.followers = userToFollow.followers.concat(idSender)
+        await userSender.save()
+        await userToFollow.save()
+        return response.success(req, res, userSender, 200)
+      } else {
+        userSender.following = userSender.following.filter(user => user.toString() !== idReceiver)
+        userToFollow.followers = userToFollow.followers.filter(user => user.toString() !== idSender)
+        await userSender.save()
+        await userToFollow.save()
+        return response.success(req, res, userSender, 200)
+      }
+    } catch (error) {
+      response.error(req, res, error, 500)
+    }
+  }
+
+  async verifyFollowUser (req, res) {
+    try {
+      const { id_sender: idSender, id_receiver: idReceiver } = req.params
+      const userSender = await UserSchema.findById(idSender)
+      const userFollowed = userSender.following.find(user => user.toString() === idReceiver)
+
+      userFollowed ? response.success(req, res, true, 200) : response.error(req, res, false, 400)
+    } catch (error) {
+      response.error(req, res, error, 500)
+    }
+  }
+
+  async getUserFollowing (req, res) {
+    try {
+      console.log(colors.bgBlue('Get user following'))
+      const user = await UserSchema.findOne({ username: req.params.username }).populate('following')
+      const userWithFollowers = await UserSchema.findOne({ username: req.params.username }).populate('followers')
+      const userWithImage = await UserSchema.findOne({ username: req.params.username }).populate('profile_image')
+      user.followers = userWithFollowers.followers
+      user.profile_image = userWithImage.profile_image
+      if (!user) return response.error(req, res, 'User not found', 404)
+      console.log(user)
+      response.success(req, res, user, 200)
+    } catch (error) {
+      response.error(req, res, error, 500)
+    }
+  }
 }
 
 const userController = new UserController()

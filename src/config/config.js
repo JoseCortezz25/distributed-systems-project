@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const config = {
   port: process.env.PORT || 5000,
+  portSocket: process.env.PORT || 5001,
   dbUser: process.env.DB_USER,
   dbPassword: process.env.DB_PASSWORD,
   dbPort: process.env.DB_PORT,

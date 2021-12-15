@@ -12,10 +12,38 @@ const errors = require('./lib/errors')
 const expressValidator = require('express-validator')
 const flash = require('connect-flash')
 const passport = require('passport')
-
+const { Server } = require('socket.io')
 const { upload } = require('./config/multer')
 
 const app = express()
+
+// Socket io
+const server = require('http').Server(app)
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST']
+  }
+})
+
+io.on('connection', (socket) => {
+  console.log('New user connected', socket.id)
+
+  socket.on('chat:message', (data) => {
+    console.log(data)
+    io.sockets.emit('chat:message', data)
+  })
+
+  socket.on('join_room', (data) => {
+    socket.join(data)
+    console.log(`${data} joined`)
+    console.log(`User with ID ${socket.id} joined room:  ${data}`)
+  })
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected', socket.id)
+  })
+})
 
 // CORS
 app.use(cors())
@@ -79,8 +107,12 @@ require('./lib/passport')
 // Middleware responsible for errors
 app.use(errors)
 
+server.listen(config.portSocket, function () {
+  console.log(colors.bgBlue(`👉 [ INFO SOCKET ] Listening at the port http://localhost:${config.portSocket}/`).black)
+})
+
 // Start
 app.listen(config.port, () => {
   console.clear()
-  console.log(colors.bgGreen(`👉 [ INFO API ] Listening at the port http://localhost:${config.port}/ in mode ${process.env.NODE_ENV}`).black)
+  console.log(colors.bgGreen(`👉 [ INFO API ] Listening at the port http://localhost:${config.port}/`).black)
 })
