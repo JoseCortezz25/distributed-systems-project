@@ -110,17 +110,12 @@ class ProjectController {
       if (!theProjectExist) return response.error(req, res, 'Project not found', 404)
       const projectToUpdate = req.body
 
-      projectToUpdate.technologies = req.body.technologies == 'undefined' || !req.body.technologies ? theProjectExist.technologies : [...theProjectExist.technologies, req.body.technologies.split(',')].flat()
-      projectToUpdate.technologies = projectToUpdate.technologies.filter(function (ele, pos) {
-        return projectToUpdate.technologies.indexOf(ele) == pos
-      })
-
+      projectToUpdate.technologies = req.body.technologies.split(',')
+      console.log(colors.green(projectToUpdate.technologies))
       projectToUpdate.name = req.body.name ? req.body.name : theProjectExist.name
       projectToUpdate.description = req.body.description ? req.body.description : theProjectExist.description
 
       if (theImageExist) {
-        console.log(colors.bgGreen('Yeah photo').black)
-
         const { filename, path, size, mimetype, originalname } = req.file
         const result = await cloudinary.v2.uploader.upload(path)
         await fs.unlink(path)
@@ -138,7 +133,6 @@ class ProjectController {
         )
         return response.success(req, res, project, 201)
       } else {
-        console.log(colors.bgRed('withot photo').white)
         const photoFinded = await PhotoSchema.findOne({ _id: theProjectExist.image_project._id })
         projectToUpdate.image_project = photoFinded._id
         const project = await ProjectSchema.findOneAndUpdate(
@@ -146,8 +140,6 @@ class ProjectController {
           projectToUpdate,
           { new: true, runValidators: true }
         )
-
-        console.log(colors.bgWhite(project).black)
         return response.success(req, res, project, 201)
       }
     } catch (error) {
