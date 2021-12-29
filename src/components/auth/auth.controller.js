@@ -3,6 +3,7 @@ const UserSchema = require('../../models/User')
 const response = require('../../lib/response')
 const auth = require('./auth.index')
 const rug = require('random-username-generator')
+// const colors = require('colors')
 
 class AuthController {
   async isExistsUser (req, res) {
@@ -54,6 +55,20 @@ class AuthController {
     } catch (error) {
       console.log(error)
       response.error(req, res, error, 500)
+    }
+  }
+
+  async theUsernameExists (req, res) {
+    const { username } = req.params
+    const theUsernameExist = await UserSchema.findOne({ username })
+    if (theUsernameExist) {
+      return res.json({
+        message: 'Username already exist'
+      })
+    } else {
+      return res.json({
+        message: 'Username don\'t exist'
+      })
     }
   }
 }

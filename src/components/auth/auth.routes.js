@@ -4,6 +4,6 @@ const router = Router()
 
 router.post('/register', AuthController.createUser)
 router.post('/verifyuser', AuthController.isExistsUser)
-// router.post('/login', AuthController.loginUser)
+router.post('/verify-username/:username', AuthController.theUsernameExists)
 
 module.exports = router

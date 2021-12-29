@@ -16,6 +16,26 @@ cloudinary.config({
 })
 
 class UserController {
+  // get a user
+  async getUsersFriend (req, res) {
+    const userId = req.query.userId
+    const username = req.query.username
+    try {
+      console.group('Get users friend')
+      console.log(colors.bgGreen('Get users friend'))
+      const user = userId
+        ? await UserSchema.findById(userId)
+        : await UserSchema.findOne({ username: username })
+      const { password, updatedAt, ...other } = user._doc
+      console.log(user._doc)
+      response.success(req, res, other, 200)
+      // res.status(200).json(other)
+      console.groupEnd()
+    } catch (err) {
+      response.error(req, res, err, 500)
+    }
+  }
+
   async getUserById (req, res) {
     try {
       const { id } = req.params
@@ -88,12 +108,12 @@ class UserController {
       const { id } = req.params
       const theUserExist = await UserSchema.findOne({ _id: id })
       if (!theUserExist) return response.error(req, res, 'User not found', 404)
-      // userUpdated = req.body
 
       req.body.fullname = req.body.fullname === '' ? theUserExist.fullname : req.body.fullname
       req.body.profession = req.body.profession === '' ? theUserExist.profession : req.body.profession
       req.body.email = req.body.email === '' ? theUserExist.email : req.body.email
       req.body.description = req.body.description === '' ? theUserExist.description : req.body.description
+      req.body.username = req.body.username === '' ? theUserExist.username : req.body.username
 
       if (req.file) {
         const { filename, path, size, mimetype, originalname } = req.file
@@ -139,13 +159,13 @@ class UserController {
         userToFollow.followers = userToFollow.followers.concat(idSender)
         await userSender.save()
         await userToFollow.save()
-        return response.success(req, res, userSender, 200)
+        return response.success(req, res, { user: userToFollow, message: 'follow' }, 200)
       } else {
         userSender.following = userSender.following.filter(user => user.toString() !== idReceiver)
         userToFollow.followers = userToFollow.followers.filter(user => user.toString() !== idSender)
         await userSender.save()
         await userToFollow.save()
-        return response.success(req, res, userSender, 200)
+        return response.success(req, res, { user: userToFollow, message: 'unfollow' }, 200)
       }
     } catch (error) {
       response.error(req, res, error, 500)
@@ -154,11 +174,21 @@ class UserController {
 
   async verifyFollowUser (req, res) {
     try {
-      const { id_sender: idSender, id_receiver: idReceiver } = req.params
-      const userSender = await UserSchema.findById(idSender)
+      // console.group('-> verify Follow User')
+      const { username_sender: idSender, id_receiver: idReceiver } = req.params
+      // console.log(colors.red('---> userSender'))
+      console.log(colors.blue(idSender + ' ' + idReceiver))
+      const userSender = await UserSchema.findOne({ username: idSender })
       const userFollowed = userSender.following.find(user => user.toString() === idReceiver)
 
-      userFollowed ? response.success(req, res, true, 200) : response.error(req, res, false, 400)
+      // console.log(colors.red('---> userSender'))
+      // console.log(colors.blue(userSender))
+      // console.log(colors.red('---> userFollowed'))
+      // console.log(colors.blue(userFollowed))
+
+      // userFollowed ? response.success(req, res, true, 200) : response.error(req, res, false, 400)
+      userFollowed ? res.status(200).json(true) : res.status(400).json(false)
+      // console.groupEnd()
     } catch (error) {
       response.error(req, res, error, 500)
     }
@@ -166,14 +196,12 @@ class UserController {
 
   async getUserFollowing (req, res) {
     try {
-      console.log(colors.bgBlue('Get user following'))
       const user = await UserSchema.findOne({ username: req.params.username }).populate('following')
       const userWithFollowers = await UserSchema.findOne({ username: req.params.username }).populate('followers')
-      const userWithImage = await UserSchema.findOne({ username: req.params.username }).populate('profile_image')
       user.followers = userWithFollowers.followers
+      const userWithImage = await UserSchema.findOne({ username: req.params.username }).populate('profile_image')
       user.profile_image = userWithImage.profile_image
       if (!user) return response.error(req, res, 'User not found', 404)
-      console.log(user)
       response.success(req, res, user, 200)
     } catch (error) {
       response.error(req, res, error, 500)

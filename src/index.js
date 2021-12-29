@@ -26,22 +26,53 @@ const io = new Server(server, {
   }
 })
 
+let users = []
+
+const addUser = (userId, socketId, username) => {
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId, username })
+}
+
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId)
+}
+
+const getUser = (userId) => {
+  return users.find((user) => user.userId === userId)
+}
+
 io.on('connection', (socket) => {
-  console.log('New user connected', socket.id)
-
-  socket.on('chat:message', (data) => {
-    console.log(data)
-    io.sockets.emit('chat:message', data)
+  // when ceonnect
+  console.log('a user connected.')
+  console.log(colors.bgYellow('users online').black)
+  console.log(colors.yellow(users))
+  // take userId and socketId from user
+  socket.on('addUser', (userId, username) => {
+    addUser(userId, socket.id, username)
+    io.emit('getUsers', users)
   })
 
-  socket.on('join_room', (data) => {
-    socket.join(data)
-    console.log(`${data} joined`)
-    console.log(`User with ID ${socket.id} joined room:  ${data}`)
+  // send and get message
+  socket.on('sendMessage', ({ senderId, receiverId, text }) => {
+    // console.log(colors.blue({
+    //   receiverId,
+    //   senderId,
+    //   text
+    // }))
+    const user = getUser(receiverId)
+    const user2 = getUser(senderId)
+    console.log(colors.green(`Sedding message from ${user2.username} to ${user.username}`))
+    io.to(user.socketId).emit('getMessage', {
+      senderId,
+      text
+    })
   })
 
+  // when disconnect
   socket.on('disconnect', () => {
-    console.log('User disconnected', socket.id)
+    console.log('a user disconnected!')
+    removeUser(socket.id)
+    io.emit('getUsers', users)
   })
 })
 
@@ -99,6 +130,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/api', require('./components/user/user.routes'))
 app.use('/api', require('./components/project/project.routes'))
 app.use('/api', require('./components/auth/auth.routes'))
+app.use('/api/conversations', require('./components/conversation/conversation.routes'))
+app.use('/api/messages', require('./components/message/message.routes'))
+// app.use('/api', require('./components/message/message.routes'))
 app.use(require('./routes/routes'))
 
 require('./lib/database')

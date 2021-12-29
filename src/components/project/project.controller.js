@@ -46,6 +46,19 @@ class ProjectController {
     }
   }
 
+  async getProjectById (req, res) {
+    try {
+      const project = await ProjectSchema.findOne({ url: req.params.id }).populate('image_project')
+      const user = await UserSchema.findOne({ _id: project.user }).populate('profile_image')
+      if (!project) return response.error(req, res, 'Project not found', 404)
+      project.user = user
+      console.log(colors.rainbow(project))
+      return response.success(req, res, project, 200)
+    } catch (error) {
+      response.error(req, res, error, 500)
+    }
+  }
+
   async createNewProject (req, res, next) {
     try {
       console.log(colors.bgRed('aqui'))
@@ -165,6 +178,59 @@ class ProjectController {
       return response.success(req, res, 'Project deleted', 200)
     } catch (error) {
       response.error(req, res, error, 500)
+    }
+  }
+
+  static async getProjectsByFollowing (followingByUser) {
+    try {
+      let projects = []
+      followingByUser.forEach(async (user) => {
+        const project = await ProjectSchema.find({ user: user._id }).populate('image_project')
+        projects = [...projects, ...project]
+        console.log(colors.red(projects.length))
+      })
+      return projects
+    } catch (error) {
+      return false
+    }
+  }
+
+  // Get the projects of the followed users
+  async getProjectsFollowingByUser (req, res) {
+    const { id } = req.params
+    try {
+      console.group('--------  getProjectsFollowingByUser  ---------')
+      const result = await UserSchema.findOne({ _id: id })
+      const followingByUser = result.following
+
+      let results
+      do {
+        let projects = []
+        const promise = new Promise((resolve, reject) => {
+          followingByUser.forEach(async (user) => {
+            const project = await ProjectSchema.find({ user: user._id }).populate('image_project')
+            projects = [...projects, ...project]
+            console.log(colors.red(projects.length))
+          })
+          resolve(projects)
+          reject(new Error('Error'))
+        })
+
+        results = await promise
+        console.log('RESULTS', results)
+      } while (results)
+      response.success(req, res, results, 200)
+      // console.log(colors.yellow(followingByUser))
+
+      // let projects = []
+      // followingByUser.forEach(async (user) => {
+      //   const project = await ProjectSchema.find({ user: user._id }).populate('image_project')
+      //   projects = [...projects, ...project]
+      //   console.log(colors.red(projects.length))
+      // })
+      // console.groupEnd()
+    } catch (error) {
+      response.success(req, res, error, 500)
     }
   }
 }
