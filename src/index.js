@@ -141,9 +141,9 @@ require('./lib/passport')
 // Middleware responsible for errors
 app.use(errors)
 
-server.listen(config.portSocket, function () {
-  console.log(colors.bgBlue(`👉 [ INFO SOCKET ] Listening at the port http://localhost:${config.portSocket}/`).black)
-})
+// server.listen(config.portSocket, function () {
+//   console.log(colors.bgBlue(`👉 [ INFO SOCKET ] Listening at the port http://localhost:${config.portSocket}/`).black)
+// })
 
 // Start
 app.listen(config.port, () => {
